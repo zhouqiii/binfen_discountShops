@@ -1,6 +1,6 @@
 <template>
-  <div class="coupon_list">
-    <div class="list_item">
+  <div>
+    <div class="shop_list">
       <div v-for="(item,index) in shopList" :key="index">
         <van-card
           :num="item.number"
@@ -43,13 +43,8 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.coupon_list{
-  position: relative;
-  height: 350px;
-  width: 100%;
-  .list_item{
-    height: 100%;
-    overflow: auto;
-  }
+.shop_list{
+  height: 100%;
+  overflow: auto;
 }
 </style>

@@ -2,8 +2,8 @@
   <div class="homeSec">
     <common-header type="0" title="优惠商户"></common-header>
     <div class="homeSec_content">
-      <div class="homeSec_search flex_row" @click="showBullet = true">
-        <div class="search_area">{{area}}<van-icon name="arrow-down" /></div>
+      <div class="homeSec_search flex_row">
+        <div class="search_area" @click="showBullet = true">{{city}}<van-icon name="arrow-down" /></div>
         <search-input @searchShop='searchShops' class="search_input"></search-input>
       </div>
       <swiper-image :imageList='imageList'></swiper-image>
@@ -14,7 +14,7 @@
         </div>
       </div>
       <dropdown-menu></dropdown-menu>
-      <shop-list :list="shopList"></shop-list>
+      <shop-list :list="shopList" class="homeSec_shop"></shop-list>
     </div>
     <!--地区选项弹出层-->
     <div class="homeSec_pop">
@@ -37,6 +37,7 @@ import DropdownMenu from '../components/DropdownMenu.vue'
 import SearchInput from '../components/SearchInput.vue'
 import SvgIcon from '../components/SvgIcon.vue'
 import SwiperImage from '../components/SwiperImage.vue'
+import { mapState } from 'vuex'
 export default {
   name:'ShopHomeSec',
   components:{ SvgIcon, SearchInput, SwiperImage, DropdownMenu, ShopList, AreaPop},
@@ -78,8 +79,7 @@ export default {
       },{
         number:'6',price:'20.00',oldPrice:'30.00',desc:'描述描述',title:'标题标题',thumb:'https://img01.yzcdn.cn/vant/ipad.jpeg'
       }],
-      area: '北京',
-      showBullet:false
+      showBullet: false
     }
   },
   methods:{
@@ -88,10 +88,13 @@ export default {
     },
     searchShops(val){
       this.$toast(`这里应该根据输入值:${val}去重新请求`)
-    }
+    },
+  },
+  computed: {
+    ...mapState(['city'])
   }
 }
 </script>
 <style scoped lang="less">
-@import url('../style/page/shopHomeSec.less');
+@import url('../style/page/shopHome.less');
 </style>

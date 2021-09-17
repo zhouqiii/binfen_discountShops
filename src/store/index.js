@@ -1,3 +1,4 @@
+import { String } from 'core-js'
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -18,6 +19,7 @@ try {
     defaultCity = localStorage.city
   }
 } catch (e) {}
+
 export default new Vuex.Store({
   // modules文件夹下所有拆分的模块
   modules,
@@ -31,7 +33,7 @@ export default new Vuex.Store({
       try {
         localStorage.city = value
       } catch (e) {}
-    }
+    },
   },
   actions: {
   }

@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     giveAlphabet: function (e) {
-      this.$emit('changeAlpha', e.target.innerText)
+      this.$emit('changeAlp', e.target.innerText)
     },
     handletouchstart: function () {
       this.start = true
@@ -57,7 +57,7 @@ export default {
           const anotherY = e.touches[0].clientY - 61
           const index = Math.floor((anotherY - this.aY) / 20)
           if (index >= 0 && index < 26) {
-            this.$emit('changeAlpha', this.alphabets[index])
+            this.$emit('changeAlp', this.alphabets[index])
           }
         }, 16)
       }
@@ -71,16 +71,16 @@ export default {
   flex-direction: column;
   justify-content: center;
   position: absolute;
-  top: 60px;
-  right: 6px;
+  top: 60Px;
+  right: 6Px;
   bottom: 0;
-  width: 8px;
+  width: 8Px;
   .item{
-    line-height:12px;
+    line-height:12Px;
     text-align: center;
-    color: #00bcd4;
-    margin-top: 6px;
-    font-size: 13px;
+    color: red;
+    margin-top: 6Px;
+    font-size: 13Px;
   }
 }
 </style>

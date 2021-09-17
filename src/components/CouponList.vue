@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="couList">
     <div class="coupon" v-for="(item,index) in couponList" :key="index">
       <div class="coupon_info">
         <div>
@@ -35,6 +35,10 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.couList{
+  height: 100%;
+  overflow: auto;
+}
 .coupon{
   width: 350px;
   height: 70px;

@@ -5,7 +5,7 @@
       <img :src="shopImg" alt="false" class="shop_img">
       <div class="shop_desc flex_between">
         <span style="flex:5">{{shop.name}}</span>
-        <div v-if="shop.preference || shop.coupon" style="flex:2">
+        <div v-if="shop.preference || shop.coupon" style="flex:2" :style="locaRight">
           <span v-if="shop.preference"><van-tag type="danger">惠</van-tag></span>
           <span v-if="shop.coupon"><van-tag type="danger">券</van-tag></span>
         </div>
@@ -17,8 +17,8 @@
       <div class="shop_desc flex_between">
         <span style="flex:4">{{shop.adress}}</span>
         <div style="flex:1" class="flex_between">
-          <div class="flex_column"><svg-icon iconClass="daohang"></svg-icon><span>导航</span></div>
-          <div class="flex_column"><svg-icon iconClass="telephone"></svg-icon><span>电话</span></div>
+          <div class="flex_column" @click="toLocation"><svg-icon iconClass="daohang"></svg-icon><span>导航</span></div>
+          <div class="flex_column" @click="toCall"><svg-icon iconClass="telephone"></svg-icon><span>电话</span></div>
         </div>
       </div>
     </div>
@@ -28,7 +28,7 @@
           <div v-if="item === '优惠信息'">
             <div class="flex_between desc_discount">
               <span v-if="shop.preference" style="flex:1"><van-tag type="danger">惠</van-tag></span>
-              <div class="discount_info" style="flex:9">
+              <div class="discount_info ellipsis" style="flex:9">
                 <span v-for="(item,index) in discountList" :key="index">{{item}}</span>
               </div>
             </div>
@@ -43,12 +43,12 @@
               <div class="discount_desc">{{activity.time}}</div>
             </div>
           </div>
-          <div v-if="item === '优惠抢单'">
+          <div v-else-if="item === '优惠抢单'">
             <div class="flex_between desc_discount">
               <span class="discount_title"><van-tag type="danger">券</van-tag>优惠抢单</span>
               <span @click="goCouponList" class="discount_desc">查看更多优惠券 ></span>
             </div>
-             <div class="desc_discount">
+             <div class="desc_discount couponList">
                 <coupon-list :list="couponList"></coupon-list>
               </div>
           </div>
@@ -76,7 +76,7 @@ export default {
           name: '北京万柳元素餐厅北京万柳新元餐厅（万柳店）', //商铺名
           coupon: 1,//是否有优惠活动
           preference: 1,//是否有券
-          time: 11 * 1000,//店铺活动开始倒计时
+          time: 59 * 1000,//店铺活动开始倒计时
           adress: '北京东城区西小口店双用名单广场3F-13号 北京东城区西小口店双用名单广场3F-13号距您300米',//店铺地址
           desc: '商户介绍内容商户介绍内容商户介绍内容商户介绍内容商户介绍内容商户介绍内容商户介绍内容商户介绍内容商户介绍内容商户介绍内容商户介绍内容商户介绍内容商户介绍内容商户介绍内容商户介绍内容', // 商铺介绍
         },
@@ -98,20 +98,28 @@ export default {
           title: '10元电子兑换券', price: '10.00', time: '2020-05-12至2020-06-30'
         },{
           title: '10元电子兑换券', price: '10.00', time: '2020-05-12至2020-06-30'
-        }]
-
+        }],
+        locaRight:''
       }
     },
     methods:{
       startHandle() {
         this.$toast('领券计时器结束,触发一些回调')
+        this.locaRight = 'text-align:right'
         this.shop.time = 0
+
       },
       onClickTab(){
         this.$toast(11)
       },
       goCouponList() {
         this.$toast('去查看优惠券列表的链接')
+      },
+      toLocation() {
+        this.$router.push({ path:'/ShopLocation' })
+      },
+      toCall() {
+        window.location.href = 'tel:10086';
       }
     },
     mounted() {

@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  name: 'Home',
+  name: 'ShopHome',
   data() {
     return{
       templateFlag: '1',// 标志后台备注的是哪个模板 1--模板一

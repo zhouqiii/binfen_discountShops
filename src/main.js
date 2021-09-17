@@ -41,7 +41,9 @@ import { request } from "@/utils/request"
 Vue.prototype.request = request;
 // // 引入自动化引入icons/svg文件夹下所有svg的js文件
 import "@/assets/icons"
-
+import VConsole from 'vconsole'
+const vConsole = new VConsole()
+Vue.use(vConsole)
 Vue.config.productionTip = false
 //全局引入header
 import CommonHeader from './components/CommonHeader.vue'

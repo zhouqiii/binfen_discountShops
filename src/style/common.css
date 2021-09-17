@@ -83,3 +83,24 @@ img {
   flex-direction: column;
   align-items: center;
 }
+.ellipsis{
+  overflow: hidden;
+  word-break: keep-all;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+@media screen and (orientation: portrait) {
+  /* .navbar{
+      padding-top: constant(safe-area-inset-top);
+      padding-top: env(safe-area-inset-top);
+  } */
+}
+/* 适配全面屏底部栏 */
+@media screen and (orientation: landscape) {
+  .map_guide{
+      /* IOS 11*/
+      padding-bottom: constant(safe-area-inset-bottom);/* //底部 34px  */
+      /*IOS 11.2*/
+      padding-bottom: env(safe-area-inset-bottom);
+  }
+}

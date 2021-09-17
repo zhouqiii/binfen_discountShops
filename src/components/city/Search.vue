@@ -1,17 +1,7 @@
 <template>
   <div>
     <div class="citysearch">
-      <van-search
-        v-model="inputname"
-        input-align="center"
-        background="#4fc08d"
-        placeholder="请输入城市"
-      >
-        <template v-slot:left-icon>
-          <svg-icon iconClass="search"></svg-icon>
-        </template>
-      </van-search>
-      <!-- <input v-model="inputname" class="city-input" type="text" placeholder="请输入城市/景点名称"  style="border-color: none"/> -->
+      <input v-model="inputname" class="city-input" type="text" placeholder="请输入城市/景点名称"  style="border-color: none"/>
     </div>
     <div class="showsearch" ref="inpututil" v-show="inputname">
       <ul>
@@ -38,7 +28,7 @@ export default {
     }
   },
   methods: {
-    changecitynn(value) {
+    changecitynn: function(value) {
       this.changecitys(value)
       this.$router.push('/')
       this.inputname = ''
@@ -78,34 +68,37 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.citysearch {
-  margin-top: 0;
-  background: #00bcd4;
-  height: 31px;
-  padding:  0 4px;
-  text-align: center;
-  .city-input{
-    box-sizing: border-box;
-    height: 28px;
-    line-height: 28px;
-    font-size: 14px;
+.citysearch{
+margin-top: 0;
+    background: red;
+    height: 31px;
+    padding:  0 4px;
     text-align: center;
-    width: 100%;
-    border-radius: 4px ;
-    color: #666;
-    padding: 0 8px;
-  }
+    .city-input{
+  box-sizing: border-box;
+        height: 28px;
+        line-height: 28px;
+        font-size: 14px;
+        text-align: center;
+        width: 100%;
+        border-radius: 4px ;
+        color: #666;
+        padding: 0 8px;
+    }
 }
+    
+      
 .showsearch{
-    z-index: 1;
+z-index: 1;
     overflow: hidden;
     position: absolute;
     top: 60px;
     left: -38px;
     right: 0;
     bottom: 0;
-    background: #eeeeee ;
+    background: #eeeeee; 
     .liforinput{
+
         line-height: 25px;
         text-align: left ;
     }

@@ -17,10 +17,10 @@
       <div class="right">
         <slot name="icon1">
           <div slot="icon1">
-            <img
+            <!-- <img
               class="icon_share"
               src="../assets/img/share.png"
-            />
+            /> -->
           </div>
         </slot>
         <slot name="icon2"></slot>
@@ -47,7 +47,7 @@ export default {
     // "3":跳转到当前项目的指定页面
     type: {
       type: String,
-      default: "0",
+      default: "1",
     },
     title:{
       type: String,
