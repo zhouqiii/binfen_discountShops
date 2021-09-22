@@ -111,14 +111,15 @@ export default {
 .dropdown{
   top: 45px;
   width: 100%;
-  z-index: 100;
+  z-index: 105;
+  position: fixed;
 }
 .search_pop{
-  position: absolute;
+  position: fixed;
   top: 45px;
   overflow: hidden;
   width: 100%;
-  z-index: 100;
+  z-index: 110;
   bottom: 0;
   background: rgba(0, 0, 0, 0.4);
 }

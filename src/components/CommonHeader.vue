@@ -80,7 +80,7 @@ export default {
   .main {
     width: 343px;
     position: fixed;
-    z-index: 10;
+    z-index: 115;
     top: 0;
     left: 0;
     display: flex;

@@ -11,7 +11,7 @@
       :showSearch='ifSearch'
       @searchShop='searchShops'
     ></dropdown-menu>
-    <div class="home_content">
+    <div class="home_content" :style="thisStyle">
       <!-- <search-input @searchShop='searchShops'></search-input> -->
       <shop-list :list="shopList" class="content_shops"></shop-list>
     </div>
@@ -46,7 +46,8 @@ export default {
       },{
         sale:'满32减18，满100减20',distance:'5463.08km',area:'XXXX区',title:'酒店会所酒店会所酒店会所',types:'饕餮美食饕餮美食饕餮美食饕餮美食',thumb:'https://img01.yzcdn.cn/vant/ipad.jpeg'
       }],
-      ifSearch: false
+      ifSearch: false,
+      thisStyle: '',//有搜索弹框时阻止页面底部滚动
     }
   },
   methods:{
@@ -83,6 +84,15 @@ export default {
     this.getShops()
     this.getShopList()
   },
+  watch:{
+    ifSearch(val) {
+      if(val) {
+        this.thisStyle = 'position: fixed'
+      }else{
+        this.thisStyle = 'position: static'
+      }
+    }
+  }
 }
 </script>
 <style scoped lang="less">
@@ -90,10 +100,11 @@ export default {
   height: 100%;
   .home_content{
     height: 100%;
+    width: 100%;
     overflow: auto;
     .content_shops{
       height: 100%;
-      padding: 16px;
+      padding: 64px 16px 16px 16px;
     }
   }
   .home_bottom{

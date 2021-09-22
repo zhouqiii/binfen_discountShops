@@ -36,7 +36,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 10;
+    z-index: 110;
     .loading_bg{
         width: 100%;
         height: 100%;
