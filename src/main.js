@@ -11,7 +11,7 @@ Vue.use(Icon);
 import {
   Cell, CellGroup, Form, Field, Dialog, Tab, Tabs, Toast,
   Search, Swipe, SwipeItem, Lazyload, DropdownMenu, DropdownItem,
-  Card, Col, Row,CountDown, TreeSelect
+  Card, Col, Row,CountDown, TreeSelect, List
 } from 'vant';
 Vue.use(Cell)
   .use(CellGroup)
@@ -31,7 +31,8 @@ Vue.use(Cell)
   .use(Col)
   .use(Row)
   .use(CountDown)
-  .use(TreeSelect);
+  .use(TreeSelect)
+  .use(List);
 // 引入公共样式
 import  "@/style/common.css" 
 import  "@/style/theme.less" 

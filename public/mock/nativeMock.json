@@ -1,0 +1,78 @@
+{
+	"ret": true,
+	"body":{
+		"businessAreaList": [
+      {
+        "businessAreaName": "西二旗商圈",
+        "businessAreaCode": 1
+      },
+      {
+        "businessAreaName": "天通苑商圈",
+        "businessAreaCode": 2
+      },
+      {
+        "businessAreaName": "上地商圈",
+        "businessAreaCode": 3
+      },
+      {
+        "businessAreaName": "古城商圈",
+        "businessAreaCode": 4
+      },
+      {
+        "businessAreaName": "望京商圈",
+        "businessAreaCode": 5
+      },
+      {
+        "businessAreaName": "国贸商圈",
+        "businessAreaCode": 6
+      }
+    ],
+    "cityAreaList":[
+      {
+        "cityAreaName": "东城区",
+        "cityAreaCode": 7
+      },
+      {
+        "cityAreaName": "海淀区",
+        "cityAreaCode": 8
+      },
+      {
+        "cityAreaName": "石景山区",
+        "cityAreaCode": 9
+      },
+      {
+        "cityAreaName": "宣武区",
+        "cityAreaCode": 10
+      },
+      {
+        "cityAreaName": "朝阳区",
+        "cityAreaCode": 11
+      },
+      {
+        "cityAreaName": "丰台区",
+        "cityAreaCode": 12
+      },{
+        "cityAreaName": "西城区",
+        "cityAreaCode": 13
+      },{
+        "cityAreaName": "宣武区",
+        "cityAreaCode": 14
+      },{
+        "cityAreaName": "房山区",
+        "cityAreaCode": 15
+      }
+    ],
+    "merTypeList": [
+      { "merchantTypeName": "全部分类", "merTypeCode": 0 },
+      { "merchantTypeName": "酒店商旅", "merTypeCode": 1 },
+      { "merchantTypeName": "饕餮美食", "merTypeCode": 2 },
+      { "merchantTypeName": "时尚购物", "merTypeCode": 3 },
+      { "merchantTypeName": "休闲娱乐", "merTypeCode": 4 },
+      { "merchantTypeName": "生活服务", "merTypeCode": 5 },
+      { "merchantTypeName": "汽车服务", "merTypeCode": 6 },
+      { "merchantTypeName": "运动健身", "merTypeCode": 7 },
+      { "merchantTypeName": "母婴亲子", "merTypeCode": 8 },
+      { "merchantTypeName": "教育培训", "merTypeCode": 9 }
+    ]
+	}
+}

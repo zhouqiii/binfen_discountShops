@@ -97,10 +97,10 @@ img {
 }
 /* 适配全面屏底部栏 */
 @media screen and (orientation: landscape) {
-  .map_guide{
-      /* IOS 11*/
-      padding-bottom: constant(safe-area-inset-bottom);/* //底部 34px  */
-      /*IOS 11.2*/
-      padding-bottom: env(safe-area-inset-bottom);
+  .bottom{
+    /* IOS 11*/
+    padding-bottom: constant(safe-area-inset-bottom);/* //底部 34px  */
+    /*IOS 11.2*/
+    padding-bottom: env(safe-area-inset-bottom);
   }
 }
