@@ -24,37 +24,43 @@
     </div>
     <div class="detail_desc">
       <van-tabs v-model="active" @click="onClickTab">
-        <van-tab v-for="(item,index) in tabList" :title="item" :key="index" :name="item">
-          <div v-if="item === '优惠信息'">
-            <div class="flex_between desc_discount">
-              <span v-if="shop.preference" style="flex:1"><van-tag type="danger">惠</van-tag></span>
-              <div class="discount_info ellipsis" style="flex:9">
-                <span v-for="(item,index) in discountList" :key="index">{{item}}</span>
+        <van-tab v-for="(item,index) in tabList" :key="index" :title="item" class="desc_tab" :name="item">
+          <div class="tab_item" v-show="active === item" ref="wrapper"><!-- v-if="item === '优惠信息'"-->
+            <div>
+              <div class="item_discount" ref="wrapperDiscount">
+                <div class="flex_between desc_discount">
+                  <span v-if="shop.preference" style="flex:1"><van-tag type="danger">惠</van-tag></span>
+                  <div class="discount_info ellipsis" style="flex:9">
+                    <span v-for="(item,index) in discountList" :key="index">{{item}}</span>
+                  </div>
+                </div>
+                <div class="desc_discount">
+                  <div class="discount_title">活动内容</div>
+                  <div class="discount_desc">{{activity.desc}}</div>
+                  <div class="discount_title">活动规则</div>
+                  <div class="discount_desc">{{activity.rules}}</div>
+                  <div  class="discount_title">活动卡种</div>
+                  <div class="discount_desc">{{activity.cardType}}</div>
+                  <div  class="discount_title">活动时间</div>
+                  <div class="discount_desc">{{activity.time}}</div>
+                </div>
+              </div>
+              <div class="item_coupon" ref="wrapperCoupon">
+                <div class="flex_between desc_discount">
+                  <span class="discount_title"><van-tag type="danger">券</van-tag>优惠抢单</span>
+                  <span @click="goCouponList" class="discount_desc">查看更多优惠券 ></span>
+                </div>
+                <div class="desc_discount couponList">
+                  <coupon-list :list="couponList"></coupon-list>
+                </div>
+              </div>
+              <div class="item_intro" ref="wrapperIntro">
+                <div class="desc_discount"><!-- v-else -->
+                  <div class="discount_title">商户介绍</div>
+                  <div class="discount_desc">{{shop.desc}}</div>
+                </div>
               </div>
             </div>
-            <div class="desc_discount">
-              <div class="discount_title">活动内容</div>
-              <div class="discount_desc">{{activity.desc}}</div>
-              <div class="discount_title">活动规则</div>
-              <div class="discount_desc">{{activity.rules}}</div>
-              <div  class="discount_title">活动卡种</div>
-              <div class="discount_desc">{{activity.cardType}}</div>
-              <div  class="discount_title">活动时间</div>
-              <div class="discount_desc">{{activity.time}}</div>
-            </div>
-          </div>
-          <div v-else-if="item === '优惠抢单'">
-            <div class="flex_between desc_discount">
-              <span class="discount_title"><van-tag type="danger">券</van-tag>优惠抢单</span>
-              <span @click="goCouponList" class="discount_desc">查看更多优惠券 ></span>
-            </div>
-             <div class="desc_discount couponList">
-                <coupon-list :list="couponList"></coupon-list>
-              </div>
-          </div>
-          <div v-else class="desc_discount">
-            <div class="discount_title">商户介绍</div>
-            <div class="discount_desc">{{shop.desc}}</div>
           </div>
         </van-tab>
       </van-tabs>
@@ -62,11 +68,13 @@
   </div>
 </template>
 <script>
+import BScroll from 'better-scroll';
 import CouponList from '../components/CouponList.vue';
 import SvgIcon from '../components/SvgIcon.vue';
 import { insertItem } from '../utils/handleList'
+import TabItem from '../components/TabItem.vue';
 export default {
-  components: { SvgIcon, CouponList },
+    components: { SvgIcon, CouponList, TabItem },
     name: 'ShopDetail',
     data() {
       return {
@@ -107,10 +115,19 @@ export default {
         this.$toast('领券计时器结束,触发一些回调')
         this.locaRight = 'text-align:right'
         this.shop.time = 0
-
       },
-      onClickTab(){
-        this.$toast(11)
+      onClickTab(index){
+        this.$nextTick(() => {
+          if(index === '优惠抢单') {
+            this.setWrapper(this.$refs.wrapper[1])
+            const element = this.$refs.wrapperCoupon[1]
+            this.bscroll.scrollToElement(element)// scrollToElement是better-scroll自定义的API
+          }if(index === '商户介绍') {
+            this.setWrapper(this.$refs.wrapper[2])
+            const element = this.$refs.wrapperIntro[2]
+            this.bscroll.scrollToElement(element)// scrollToElement是better-scroll自定义的API
+          }
+        })
       },
       goCouponList() {
         this.$toast('去查看优惠券列表的链接')
@@ -120,6 +137,14 @@ export default {
       },
       toCall() {
         window.location.href = 'tel:10086';
+      },
+      getScroll(val) {
+        console.log(val,'1111')
+      },
+      setWrapper(wrapper) {
+        this.bscroll = new BScroll(wrapper, {
+          click: true
+        })
       }
     },
     mounted() {
@@ -130,6 +155,11 @@ export default {
         this.discountList = insertItem(this.discountList)
       }
       
+    },
+    created() {
+      this.$nextTick(() => {
+        this.setWrapper(this.$refs.wrapper[0])
+      })
     }
 }
 </script>
