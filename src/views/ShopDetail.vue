@@ -72,9 +72,8 @@ import BScroll from 'better-scroll';
 import CouponList from '../components/CouponList.vue';
 import SvgIcon from '../components/SvgIcon.vue';
 import { insertItem } from '../utils/handleList'
-import TabItem from '../components/TabItem.vue';
 export default {
-    components: { SvgIcon, CouponList, TabItem },
+    components: { SvgIcon, CouponList },
     name: 'ShopDetail',
     data() {
       return {

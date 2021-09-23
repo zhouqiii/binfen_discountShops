@@ -11,21 +11,6 @@ const routes = [
     component: Home,
   },
   {
-    path: '/ShopHome',
-    name: 'ShopHome',
-    component: () => import('../views/ShopHome.vue'),
-  },
-  {
-    path: '/ShopHomeFir',
-    name: 'ShopHomeFir',
-    component: () => import('../views/ShopHomeFir.vue'),
-  },
-  {
-    path: '/ShopHomeSec',
-    name: 'ShopHomeSec',
-    component: () => import('../views/ShopHomeSec.vue'),
-  },
-  {
     path: '/ShopDetail',
     name: 'ShopDetail',
     component: () => import('../views/ShopDetail.vue'),
