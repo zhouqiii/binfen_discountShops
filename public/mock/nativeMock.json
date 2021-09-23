@@ -4,75 +4,75 @@
 		"businessAreaList": [
       {
         "businessAreaName": "西二旗商圈",
-        "businessAreaCode": 1
+        "businessAreaCode": "SQ100000002"
       },
       {
         "businessAreaName": "天通苑商圈",
-        "businessAreaCode": 2
+        "businessAreaCode": "SQ100000003"
       },
       {
         "businessAreaName": "上地商圈",
-        "businessAreaCode": 3
+        "businessAreaCode": "SQ100000004"
       },
       {
         "businessAreaName": "古城商圈",
-        "businessAreaCode": 4
+        "businessAreaCode": "SQ1000000024"
       },
       {
         "businessAreaName": "望京商圈",
-        "businessAreaCode": 5
+        "businessAreaCode": "SQ1000000025"
       },
       {
         "businessAreaName": "国贸商圈",
-        "businessAreaCode": 6
+        "businessAreaCode": "SQ1000000026"
       }
     ],
-    "cityAreaList":[
+    "areaList":[
       {
-        "cityAreaName": "东城区",
-        "cityAreaCode": 7
+        "areaName": "东城区",
+        "areaId": "A7"
       },
       {
-        "cityAreaName": "海淀区",
-        "cityAreaCode": 8
+        "areaName": "海淀区",
+        "areaId": "A8"
       },
       {
-        "cityAreaName": "石景山区",
-        "cityAreaCode": 9
+        "areaName": "石景山区",
+        "areaId": "A9"
       },
       {
-        "cityAreaName": "宣武区",
-        "cityAreaCode": 10
+        "areaName": "宣武区",
+        "areaId": "A10"
       },
       {
-        "cityAreaName": "朝阳区",
-        "cityAreaCode": 11
+        "areaName": "朝阳区",
+        "areaId": "A11"
       },
       {
-        "cityAreaName": "丰台区",
-        "cityAreaCode": 12
+        "areaName": "丰台区",
+        "areaId": "A12"
       },{
-        "cityAreaName": "西城区",
-        "cityAreaCode": 13
+        "areaName": "西城区",
+        "areaId": "A13"
       },{
-        "cityAreaName": "宣武区",
-        "cityAreaCode": 14
+        "areaName": "宣武区",
+        "areaId": "A14"
       },{
-        "cityAreaName": "房山区",
-        "cityAreaCode": 15
+        "areaName": "房山区",
+        "areaId": "A15"
       }
     ],
     "merTypeList": [
-      { "merchantTypeName": "全部分类", "merTypeCode": 0 },
-      { "merchantTypeName": "酒店商旅", "merTypeCode": 1 },
-      { "merchantTypeName": "饕餮美食", "merTypeCode": 2 },
-      { "merchantTypeName": "时尚购物", "merTypeCode": 3 },
-      { "merchantTypeName": "休闲娱乐", "merTypeCode": 4 },
-      { "merchantTypeName": "生活服务", "merTypeCode": 5 },
-      { "merchantTypeName": "汽车服务", "merTypeCode": 6 },
-      { "merchantTypeName": "运动健身", "merTypeCode": 7 },
-      { "merchantTypeName": "母婴亲子", "merTypeCode": 8 },
-      { "merchantTypeName": "教育培训", "merTypeCode": 9 }
+      { "merchantTypeName": "全部分类", "merTypeCode": "000018" },
+      { "merchantTypeName": "酒店商旅", "merTypeCode": "000011" },
+      { "merchantTypeName": "饕餮美食", "merTypeCode": "0000182" },
+      { "merchantTypeName": "时尚购物", "merTypeCode": "0000183" },
+      { "merchantTypeName": "休闲娱乐", "merTypeCode": "0000184" },
+      { "merchantTypeName": "生活服务", "merTypeCode": "0000185" },
+      { "merchantTypeName": "汽车服务", "merTypeCode": "0000186" },
+      { "merchantTypeName": "运动健身", "merTypeCode": "0000187" },
+      { "merchantTypeName": "母婴亲子", "merTypeCode": "0000188" },
+      { "merchantTypeName": "教育培训", "merTypeCode": "0000189" }
     ]
 	}
 }

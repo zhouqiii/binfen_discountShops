@@ -40,8 +40,8 @@ module.exports = {
   },
   devServer: {
     proxy: {
-      '/AppPrj4': {
-        target: 'https://www.alex188.cn/AppPrj4',
+      '/dsmsmqsc': {
+        target: 'http://22.11.236.167:8081/dsmsmqsc',
         changeOrigin: true,
         ws: true,
       }
