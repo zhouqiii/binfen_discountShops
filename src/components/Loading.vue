@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-09-24 10:27:10
+ * @LastEditTime: 2021-09-26 16:12:07
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \binfen_discountShops\src\components\Loading.vue
+-->
 <template>
   <!-- <div class="loading" v-show="loadingShow"> -->
   <div class="loading">
@@ -50,9 +58,9 @@ export default {
           background: rgba(0,0,0,.1);
           text-align: center;
           img.loading_img{
-            margin-top: 10px;
-            width: 16px;
-            height: 16px;
+            margin-bottom: 6px;
+            width: 22px;
+            height: 22px;
             -webkit-animation: loading 2s steps(9,end) infinite;
             -moz-animation: loading 2s steps(9,end) infinite;
             -o-animation: loading 2s steps(9,end) infinite;

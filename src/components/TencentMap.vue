@@ -8,8 +8,8 @@
         <svg-icon iconClass="run" @click="transport('walking')"></svg-icon>
       </div>
       <div class="guide_shop">
-        <div class="shop_name ellipsis">{{shop.name}}</div>
-        <div class="shop_location ellipsis" @click="getLocation"><span>{{shop.location}}</span></div>
+        <div class="shop_name ellipsis">{{shopInfo.merchantName}}</div>
+        <div class="shop_location ellipsis" @click="getLocation"><span>{{shopInfo.merchantAddress}}</span></div>
       </div>
     </div>
   </div>
@@ -34,13 +34,14 @@ const key ="JAJBZ-ADQLJ-MMHFF-K63WY-IOZX7-OOF6T"; //开发key，可在控制台�
 export default {
   components: { SvgIcon },
   name: 'TencentMap',
+  props: ['shopData'],
   data() {
     return {
-      shop:{
-        name: '北京世纪星滑冰俱乐部(九华山庄)',//店铺名称
-        location: '顺沙路75号九华山庄17区C馆世纪星国际冰雪体育中心顺沙路75号九华山庄17区C馆世纪星国际冰雪体育中心',//店铺具体地址
-        lat: 39.984120,//经度
-        lng: 116.307484,//纬度
+      shopInfo:{
+        merchantName: '',//店铺名称
+        merchantAddress: '',//店铺具体地址
+        lat: '',//经度
+        lon: '',//纬度
       },
       user:{//用户当前定位
         lat: null,//经度
@@ -76,7 +77,7 @@ export default {
         geometries: [{
           "id": 'start',
           "styleId": 'start',
-          "position": new TMap.LatLng(this.user.lat,this.user.lng)
+          "position": new TMap.LatLng(this.user.lat,this.user.lon)
         }, {
           "id": 'end',
           "styleId": 'end',
@@ -114,7 +115,7 @@ export default {
       const _this = this
       console.log(_this.user.lat, _this.user.lng,'用户定位')
       // 定义地图中心点坐标
-      center = new TMap.LatLng(_this.shop.lat, _this.shop.lng)
+      center = new TMap.LatLng(_this.shopInfo.lat, _this.shopInfo.lon)
       map = new TMap.Map(document.getElementById('map'), {
         center: center,
         zoom: 16, // 设置地图缩放级别--数值越大显示的越具体
@@ -169,7 +170,7 @@ export default {
         count += 1
         this.removeMarker()
         this.display_marker()
-        const url = `${wayUrl}${way}/?from=${this.user.lat},${this.user.lng}&to=${this.shop.lat},${this.shop.lng}&output=jsonp&callback=cb&key=${key}`
+        const url = `${wayUrl}${way}/?from=${this.user.lat},${this.user.lng}&to=${this.shopInfo.lat},${this.shopInfo.lon}&output=jsonp&callback=cb&key=${key}`
         this.jsonp_request(url)
       } else {
         this.$toast('无法获取您当前位置，路线规划失败！')
@@ -231,14 +232,19 @@ export default {
     },
   },
   mounted () {
-    this.initMap()
     this.getLocation()
+    this.initMap()
     //把腾讯地图绘制路线的请求jsonp对应的window回调函数cb挂载到lineHandle
     window['cb'] = (val) => {
       this.lineHandle(val)
      }
 
   },
+  watch:{
+    shopData(val) {
+      this.shopInfo = Object.assign(this.shopInfo, val)
+    }
+  }
 }
 </script>
 <style>

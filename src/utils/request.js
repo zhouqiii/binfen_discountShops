@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-09-24 10:27:10
+ * @LastEditTime: 2021-09-27 14:14:43
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \binfen_discountShops\src\utils\request.js
+ */
 import axios from "axios";
 import createDom from "@/utils/createDom";
 import Loading from '@/components/Loading.vue';
@@ -5,7 +13,7 @@ import { Dialog } from 'vant';
 const request = axios.create({
     baseURL: process.env.NODE_ENV === "development" ? "" : "/AppPrj",//AppPrj
     timeout: 15000,
-    withCredentials: true
+    withCredentials: true,
 })
 let ld;
 let num = 0;
@@ -28,8 +36,12 @@ function interceptorsResponse(res) {
     if(res.data.stat) {
       if(res.data.stat === '00') {
         return res.data
+      } else {
+        Dialog.alert({
+          message: res.data.result,
+          confirmButtonText:'确定'
+        })
       }
-      return Promise.reject(res.data.message)
     }
   } else {
     Dialog.alert({

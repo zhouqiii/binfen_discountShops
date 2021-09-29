@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-09-24 10:27:10
+ * @LastEditTime: 2021-09-27 09:32:32
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \binfen_discountShops\vue.config.js
+ */
 const path = require("path");
 const resolve = dir => require("path").join(__dirname, dir)
 module.exports = {
@@ -24,24 +32,24 @@ module.exports = {
       })
     // 3 less公共变量
     // 需要安装 style-resources-loader 与stylus一致
-     const oneOfsMap = config.module.rule("less").oneOfs.store;
-     oneOfsMap.forEach(item => {
-       item
-         .use("style-resources-loader")
-         .loader("style-resources-loader")
-         .options({
-           // 需要插入的文件路径
-           patterns: "./src/style/variable.less"
-           // 需要插入的文件路径数组
-           // patterns: ["./path/to/vars.less", "./path/to/mixins.less"]
-         })
-         .end();
-     });
+    const oneOfsMap = config.module.rule("less").oneOfs.store;
+    oneOfsMap.forEach(item => {
+      item
+        .use("style-resources-loader")
+        .loader("style-resources-loader")
+        .options({
+          // 需要插入的文件路径
+          patterns: "./src/style/variable.less"
+          // 需要插入的文件路径数组
+          // patterns: ["./path/to/vars.less", "./path/to/mixins.less"]
+        })
+        .end();
+    });
   },
   devServer: {
     proxy: {
       '/dsmsmqsc': {
-        target: 'http://22.11.236.167:8081/dsmsmqsc',
+        target: 'http://22.187.19.164:9081',//唐荣华本地--http://22.11.236.167:8081 dns='167'//服务器地址22.11.19.164:9081
         changeOrigin: true,
         ws: true,
       }

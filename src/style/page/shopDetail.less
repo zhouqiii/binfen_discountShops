@@ -1,51 +1,116 @@
 .detail{
+    font-size: @F16;
     .detail_shop{
         .shop_img{
-            height: 170px;
-            width: 100%;
-        }
-        .shop_desc{
-            font-size: @F14;
-            min-height: 36px;
-            
-        }
-    }
-    .detail_desc{
-        .desc_tab{
-            height: 330px;
-            width: 100%;
+            height: 192px;
             position: relative;
-            overflow: hidden;
-            .tab_item{
+            width: 100%;
+            img{
+                width: 100%;
                 height: 100%;
-                overflow: scroll;
             }
-        }
-        .desc_discount{
-            .discount_info{
-                font-size: @F12;
-                height: 20px;
-                line-height: 20px;
-                border: 1px solid red;
-                border-radius: 5px;
-                background: rgba(red, 0.1);
-                color: red;
-                span{
-                    margin: auto 5px;
+            .img_time{
+                position: absolute;
+                bottom: 0;
+                height: 40px;
+                line-height: 40px;
+                background: @CF44;
+                width: 100%;
+                font-size: @F14;
+                color: @CFFF;
+                .time_text{
+                    margin-left: 20px;
+                    height: 22px;
+                    line-height: 22px;
+                    img{
+                        height: 22px;
+                        width: 22px;
+                    }
+                }
+                .time_time{
+                    margin-right: 20px;
+                    .time_block{
+                        display: inline-block;
+                        width: 22px;
+                        color: @CF44;
+                        background: #fff;
+                        font-size: @F14;
+                        text-align: center;
+                        border-radius: 2px;
+                    }
+                    .time_colon{
+                        display: inline-block;
+                        margin: 0 4px;
+                        color: yellow;
+                    }
                 }
             }
+        }
+        .shop_desc{
+            padding:0 16px;
+            background: @CFFF;
+            .desc_phone{
+                img{
+                    height: 22px;
+                    width: 22px;
+                }
+            }
+            .area{
+                height: 18px;
+                line-height: 18px;
+                padding: 0 5px;
+                border-radius: 2px;
+                background: @CE85;
+                color: @CFFF;
+                .svg-icon{
+                  height: @F15;
+                  width: @F15;
+                  vertical-align: sub;
+                }
+            }
+        }
+        .name{
+            height: 43px;
+            line-height: 43px;
+        }
+        .info{
+            font-size: @F11;
+            color: @C666;
+            padding-bottom: @P16;
+        }
+       
+    }
+    .detail_discount{
+        margin-top: @M16;
+        padding: @P16;
+        background: @CFFF;
+        .detail_sale{
+            margin-top: @M12;
+            .sale_tag{
+                margin-right: 5px;
+              }
+        }
+        .discont_box{
+            padding-top: @P16;
             .discount_title{
                 font-size: @F15;
                 font-weight: bold;
-            }
-            .discount_desc{
-                font-size: @F14;
+                color: @C444;
             }
         }
-        .couponList{
-            height: 299px;
-            width: 100%;
-            position: relative;
+        .discount_desc{
+            margin-top: @M12;
+            font-size: @F13;
+            color: @C666;
+            line-height: 19px;
+            .desc_type{
+                flex-wrap: wrap;
+            }
         }
+    }
+    .title{
+        color: @C333;
+        font-size: @F18;
+        font-weight: bold;
     }
 }

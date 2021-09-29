@@ -1,1 +1,82 @@
 /*vant单元格样式自定义*/
+/*dropDown*/
+.van-dropdown-menu__title{
+    color: @C666;
+}
+.van-dropdown-menu__title::after{
+    border-color: transparent transparent @C999 @C999;
+}
+.van-sidebar-item--select{
+    color: @CF44 !important;
+}
+.van-sidebar-item--select::before{
+    background-color: inherit;
+}
+.van-sidebar{
+    background: @CD8D;
+    font-size: @F15;
+    color: @C666;
+    .van-sidebar-item{
+        background-color: @CD8D;
+    }
+}
+.van-tree-select__item{
+    font-size: @F15;
+}
+.van-tree-select__item--active{
+    color: @CF44;
+}
+/*商户列表card*/
+.van-card{
+    border-radius: 8px;
+    background: @CFFF;
+    padding: 12px;
+    .van-card__thumb{
+        height: 80px;
+        width: 80px
+    }
+    .van-card__content{
+        min-height: auto;
+    }
+}
+.van-tag--danger{
+    font-size: @F11;
+    background-color: @CE85;
+    color: @CFFF;
+}
+.van-tag--plain{
+    color: @CE85 !important;
+    background: @CFFF;
+}
+.van-tag--plain::before{
+    border-radius: 2px;
+    border: 1px solid @CE85
+}
+.van-count-down{
+    color: @CFFF;
+}
+.van-hairline--top-bottom{
+    width: 100%;
+}
+[class*=van-hairline]::after{
+    border: 0;
+}
+.collapse_drop{
+    .van-cell::after{
+        border-bottom: 0;
+    }
+    .van-cell{
+        .van-cell__title{
+            flex:0
+        }
+        .van-cell__value{
+            flex: 1;
+        }
+        .van-cell__right-icon{
+            flex: 1;
+        }
+    }
+}
+.van-collapse-item__content{
+    padding: 0;
+}

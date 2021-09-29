@@ -1,0 +1,161 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-09-26 20:03:11
+ * @LastEditTime: 2021-09-28 10:04:36
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \binfen_discountShops\src\views\AreaShopList.vue
+-->
+<template>
+  <div class="home">
+    <common-header :title="title"></common-header>
+    <div class="home_content" :style="thisStyle">
+      <div class="content_list">
+        <div v-if="listLength" class="list_nocontent">
+          <img src="../assets/img/img_nocontent.png"/>
+          <div>没有找到合适的商户~</div>
+        </div>
+        <!-- <van-pull-refresh v-else> -->
+          <van-list
+            v-else
+            v-model="loading"
+            :finished="finished"
+            :immediate-check="false"
+            :offset="50"
+            finished-text="-没有更多了-"
+            @load="onLoad"
+          >
+            <template #loading>
+              <div class="list_loading">
+                <img src="../assets/img/img_loading.png"/>
+                <span>努力加载中</span>
+              </div>
+            </template>
+            <div class="list_shops">
+              <div v-for="(item,index) in shopList" :key="index" class="list_detail">
+                <van-card @click="routeItem(item)">
+                  <template #thumb>
+                    <div class="detail_img">
+                      <img :src='item.merchantPicture' />
+                    </div>
+                  </template>
+                  <template #title>
+                    <div class="detail_title ellipsis">{{item.merchantName}}</div>
+                  </template>
+                  <template #desc>
+                    <div class="detail_desc flex_between">
+                      <span class="desc_area ellipsis">{{item.areaName}}</span>
+                      <span class="desc_type ellipsis">{{item.merchantTypeName}}</span>
+                      <span class="desc_distance">{{item.distanceKm}}km</span>
+                    </div>
+                    <div class="detail_sale">
+                      <span class="area">
+                        <svg-icon iconClass="search"></svg-icon>{{item.businessAreaName}}
+                      </span>
+                    </div>
+                  </template>
+                  <template #tags>
+                    <!--非我行收单商户-->
+                    <div class="detail_sale"  v-if="item.merchantIsOnself === 0">
+                      <van-tag type="danger" plain class="sale_tag" v-for="(st,stIndex) in item.ruleList" :key="stIndex">
+                        <span class="tag_text">满{{st.fullMeetMoney}}减{{st.fullReductionMoney}}</span>
+                      </van-tag>
+                    </div>
+                    <!--我行收单商户且进行了活动配置-->
+                    <div class="detail_sale"  v-if="item.merchantIsOnself === 1 && item.isOnActivity === '1'">
+                      <van-tag type="danger" style="margin-right:5px">惠</van-tag>
+                      <van-tag type="danger" plain class="sale_tag" v-for="(st,stIndex) in item.ruleList" :key="stIndex">
+                        <span class="tag_text">满{{st.fullMeetMoney}}减{{st.fullReductionMoney}}</span>
+                      </van-tag>
+                    </div>
+                  </template>
+                </van-card>
+              </div>
+            </div>
+          </van-list>
+        <!-- </van-pull-refresh> -->
+      </div>
+    </div>
+    <div class="home_bottom"></div>
+  </div>
+</template>
+<script>
+import { getShopsList } from '../api/shops'
+
+let searchData = {
+  cityId: '',//上送城市编号
+  lon: '',//经度
+  lat: '',//纬度
+  businessAreaCode: '',//商圈编号
+  merTypeCode: '',//商户分类编号
+  areaId: '',//区域编号
+  smartSort:'1',//智能排序 0-智能推荐 1-距离优先
+  pageNo: 1,//第几页
+  pageNum: null,//每页条数
+  search: '',//商户名称模糊搜索
+  txnId: '1PMC000002',//交易号
+  dns: '167'///生产环境注掉
+}
+export default {
+  name:'ShopListArea',
+  data() {
+    return{
+      shopList:[],
+      listLength: false,
+      hasNextPage: false,
+      finished: false,
+      ifSearch: false,
+      thisStyle: '',//有搜索弹框时阻止页面底部滚动
+      loading: false,//滚动到底部加载中
+      title:''
+    }
+  },
+  methods:{
+    //请求接口获取列表
+    getShopList() {
+      getShopsList(searchData).then((res) => {
+        // 加载状态结束
+        this.loading = false;
+        console.log(res.body,'这是拿到的商户列表')
+        const dataList = res.body.shopList
+        if(dataList.length > 0) {
+          dataList.forEach((item) => {
+            this.$set(item,'distanceKm',Math.round((parseFloat(item.distance)/1000)*100)/100)
+          });
+        }
+        this.shopList = this.shopList.concat(dataList)
+        this.listLength = this.shopList.length === 0 
+        this.hasNextPage = res.body.hasNextPage === '1'
+        this.finished = res.body.hasNextPage === '0'
+      })
+    },
+    //商户列表加载到底部刷新
+    onLoad() {
+      if(this.hasNextPage) {
+        searchData.pageNo += 1
+        this.getShopList()
+      }
+    },
+    routeItem(data) {
+      this.$router.push({
+        path:'/ShopDetail',
+        query: { 
+          data: JSON.stringify(data)
+        }
+      })
+    }
+  },
+  mounted() {
+    searchData = Object.assign(searchData, JSON.parse(this.$route.query.info))
+    this.title = this.$route.query.title
+    this.getShopList()
+  },
+}
+</script>
+<style scoped lang="less">
+.home_content{
+  padding: 16px;
+}
+@import url('../style/page/home.less');
+</style>
+  

@@ -3,29 +3,39 @@
     <div class="dropdown">
       <van-dropdown-menu>
         <van-dropdown-item :title="selArea" ref="areaDrop">
+          <div v-if="ifFailList" @click="reLoad" class="drop_reload">
+            <img src="../assets/img/icon_reload.png"/>
+            <span>点击重新加载</span>
+          </div>
           <van-tree-select
+            v-if="!ifFailList"
             :items="areaOptions"
             :active-id.sync="areaChildren"
             :main-active-index.sync="areaParent"
             @click-item="cityChange"
           />
         </van-dropdown-item>
-        <van-dropdown-item v-model='merTypeCode' :title='selType' :options="typeOptions" @change='typeChange'/>
-        <van-dropdown-item v-model="smartSort" :options="sortOptions"/>
+        <van-dropdown-item v-model='merTypeCode' :title='selType' :options="typeOptions" @change='typeChange'>
+          <div v-if="ifFailList" @click="reLoad" class="drop_reload">
+            <img src="../assets/img/icon_reload.png"/>
+            <span>点击重新加载</span>
+          </div>
+        </van-dropdown-item>
+        <!-- <van-dropdown-item v-model="smartSort" :options="sortOptions"/> -->
       </van-dropdown-menu>
     </div>
     <div class="search_pop" v-if="ifSearch" @click="closePop">
-      <div  @click.stop=""><!--阻止冒泡-->
+      <div @click.stop=""><!--阻止冒泡-->
         <van-search
           v-model="searchVal"
-          input-align="center"
-          background="#4fc08d"
-          placeholder="搜索商户"
-          @change="searchShop"
+          input-align="left"
+          background="#ffffff"
+          placeholder="请输入商户名称"
+          @input="searchShop"
         >
-          <template v-slot:left-icon>
+          <!-- <template v-slot:left-icon>
             <svg-icon iconClass="search"></svg-icon>
-          </template>
+          </template> -->
         </van-search>
       </div>
     </div>
@@ -42,19 +52,19 @@ import SearchInput from './SearchInput.vue';
 export default {
   components: { SearchInput },
   name: 'DropDownMenu',
-  props: ['allData','showSearch'],
+  props: ['allData','showSearch','ifFailSel'],
   data() {
     return {
       selArea:'附近商圈',
       areaChildren: -1,//附近商圈第二栏选中的id
       areaParent: 0,//附近商圈第一栏选中的索引
-      smartSort: '1',
+      // smartSort: '1',
       merTypeCode:'',//商户分类编号
       selType: '商户分类',
-      sortOptions: [
-        // { text: '智能排序', value: 0 },
-        { text: '距离优先', value: '1' }
-      ],
+      // sortOptions: [
+      //   // { text: '智能排序', value: 0 },
+      //   { text: '距离优先', value: '1' }
+      // ],
       areaOptions: [{
         text:'商圈',children:[]
       },{
@@ -63,35 +73,50 @@ export default {
       typeOptions: [],
       ifSearch: false,
       searchVal:'',
+      ifFailList: true,//父组件加载头部选项列表数据是否失败
     };
   },
   methods: {
     //商圈类型选择改变触发
     typeChange(index) {
       console.log(index,'typeChange')
+      sendData.merTypeCode = index
       this.typeOptions.forEach((item) => {
         if(item.value === index) {
           this.selType = item.text
         }
       })
+      this.$emit('upDateShopList',sendData)
     },
     //商圈类型或者商圈地区选择改变触发
     cityChange(item) {
       console.log(this.areaParent,this.areaChildren,'是商圈还是地区')
-      sendData.areaId = this.areaParent === 1 ? this.areaChildren : ''
-      sendData.businessAreaCode = this.areaParent === 0 ? this.areaChildren : ''
+      if(this.areaOptions.length === 1) {
+        sendData.areaId = this.areaOptions[0].text === '城区' ? this.areaChildren : ''
+        sendData.businessAreaCode = this.areaOptions[0].text === '商圈' ? this.areaChildren : ''
+      }else if(this.areaOptions.length === 2){
+        sendData.areaId = this.areaParent === 1 ? this.areaChildren : ''
+        sendData.businessAreaCode = this.areaParent === 0 ? this.areaChildren : ''
+      }
       this.selArea = item.text
       this.$refs.areaDrop.toggle();//把ref=areaDrop对应的dropDown关起来
       this.$emit('upDateShopList',sendData)
     },
     //点击搜索
     searchShop(){
+      sendData.search = this.searchVal
       this.$emit('upDateShopList',sendData)
     },
     //关闭当前搜索层
     closePop() {
       this.searchVal = ''
+      sendData.search = ''
       this.$emit('closePop')
+    },
+    //头部选项加载失败--重新加载商户分类和商圈头部选项
+    reLoad() {
+      this.$refs.areaDrop.toggle();//把ref=areaDrop对应的dropDown关起来
+      this.$emit('upDateSelectList')
     }
   },
   watch: {
@@ -104,6 +129,8 @@ export default {
           obj = JSON.parse(JSON.stringify(obj).replace(/businessAreaCode/g, 'id'))
           this.areaOptions[0].children.push(obj)
         });
+      }else{
+        this.areaOptions.splice(0,1)
       }
       //所有城区赋值
       if(val.areaList.length>0) {
@@ -113,22 +140,29 @@ export default {
           obj = JSON.parse(JSON.stringify(obj).replace(/areaId/g, 'id'))
           this.areaOptions[1].children.push(obj)
         });
+      }else{
+        if(this.areaOptions.length === 1){
+          this.areaOptions.splice(0,1)
+        }else{
+          this.areaOptions.splice(1,1)
+        }
       }
       //所有商户分类
       if(val.merTypeList.length>0) {
         val.merTypeList.forEach((item) => {
           let obj = item
           obj = JSON.parse(JSON.stringify(obj).replace(/merchantTypeName/g, 'text'))
-          obj = JSON.parse(JSON.stringify(obj).replace(/merTypeCode/g, 'value'))
+          obj = JSON.parse(JSON.stringify(obj).replace(/merchantTypeCode/g, 'value'))
           this.typeOptions.push(obj)
         });
       }
+      console.log(this.areaOptions,this.typeOptions,'头部选项列表')
     },
     showSearch(val) {
       this.ifSearch = val
     },
-    searchVal(val) {
-      sendData.search = val
+    ifFailSel(val) {
+      this.ifFailList = val
     }
   }
 };
@@ -139,6 +173,19 @@ export default {
   width: 100%;
   z-index: 105;
   position: fixed;
+  .drop_reload{
+    padding: 40px 0;
+    text-align: center;
+    font-size: 15px;
+    color: @CF44;
+    img{
+      height: 16px;
+      width: 16px;
+      margin-right: 6px;
+      vertical-align:top
+
+    }
+  }
 }
 .search_pop{
   position: fixed;
