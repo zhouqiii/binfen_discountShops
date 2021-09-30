@@ -5,7 +5,7 @@
         <slot name="back">
           <img
             @click="back"
-            src="../assets/img/back@2x.png"
+            src="../assets/img/icon_back.png"
             alt="back"
             class="back back_btn"
           />

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-09-24 10:27:10
- * @LastEditTime: 2021-09-28 09:49:28
+ * @LastEditTime: 2021-09-29 11:35:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \binfen_discountShops\src\views\ShopDetail.vue
@@ -11,7 +11,7 @@
     <common-header type="1" title="商户详情"></common-header>
     <div class="detail_shop">
       <div class="shop_img">
-        <img :src="shop.merchantPicture" alt="false">
+        <img :src="shop.merchantPicture" alt="" :onerror="defaultImg">
         <!-- <div class="img_time flex_between" v-if='time > 0'>
           <div class="time_text"><img src="../assets/img/icon_search.png"/>活动倒计时</div>
           <van-count-down :time="time" @finish="startHandle" class="time_time">
@@ -29,18 +29,15 @@
       <div class="shop_desc flex_between name title">
         <span>{{shop.merchantName}}</span>
       </div>
-      <div class="shop_desc info">
-        <span class="area" @click="toTheShop">
-          <svg-icon iconClass="search"></svg-icon>{{shop.businessAreaName}}
+      <div class="shop_desc">
+        <span class="area ellipsis" @click="toTheShop">
+          <img src="../assets/img/icon_merchant.png" alt="">
+          <span>{{shop.businessAreaName}}</span>
         </span>
       </div>
-      <div class="shop_desc flex_between info">
-        <div style="flex:4;line-height:16px" class="flex_between">
-          <span>{{shop.merchantAddress}} 距您{{shop.distanceKm}}km</span>
-          <span>|</span>
-        </div>
-        
-        <div style="flex:1;justify-content:center" class="flex_between">
+      <div class="shop_desc flex_between" style="padding-top:11px;padding-bottom:16px">
+        <span class='desc_dis'>{{shop.merchantAddress}} 距您{{shop.distanceKm}}km</span>
+        <div style="flex:1;justify-content:flex-end" class="flex_between">
           <!-- <div class="flex_column" @click="toLocation"><svg-icon iconClass="daohang"></svg-icon><span>导航</span></div> -->
           <div class="desc_phone flex_column" @click="toCall">
             <img src='../assets/img/icon_phone.png' />
@@ -50,13 +47,15 @@
       </div>
     </div>
     <!--我行收单商户且进行了活动配置-->
-    <div v-if="!(shop.isOnActivity === '0' && shop.merchantIsOnself === 1)" class="detail_discount">
+    <div v-if="shop.merchantIsOneself === 0  || (shop.merchantIsOneself === 1 && shop.activityExplain)" class="detail_discount">
       <div class="title">优惠信息</div>
-      <div class="detail_sale">
-        <van-tag type="danger" style="margin-right:5px">惠</van-tag>
-        <van-tag type="danger" plain class="sale_tag" v-for="(st,stIndex) in shop.ruleList" :key="stIndex">
-          <span>满{{st.fullMeetMoney}}减{{st.fullReductionMoney}}</span>
-        </van-tag>
+      <div class="detail_sale flex_start">
+        <img src="../assets/img/icon_sale.png" class="sale_tag" alt=""/>
+        <div v-show="shop.ruleList.length > 0">
+          <van-tag type="danger" plain class="sale_tag" v-for="(st,stIndex) in shop.ruleList" :key="stIndex">
+            <span>满{{st.fullMeetMoney}}减{{st.fullReductionMoney}}</span>
+          </van-tag>
+        </div>
       </div>
       <div class="discont_box">
         <div class="discount_title">活动内容</div>
@@ -154,7 +153,12 @@ export default {
       this.shop =Object.assign(this.shop, data)
       console.log(this.shop,'商户信息')
     },
-    created() {}
+    computed: {
+    //商户图片加载失败时显示的默认图片
+    defaultImg() {
+      return 'this.src="'+require('../assets/img/img_shopdetail.png')+'"'
+    }
+  }
 }
 </script>
 <style lang="less" scoped>

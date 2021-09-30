@@ -30,13 +30,13 @@
             :finished="finished"
             :immediate-check="false"
             :offset="10"
-            finished-text="-没有更多了-"
+            finished-text=""
             @load="onLoad"
           >
             <template #loading>
               <div class="list_loading">
                 <img src="../assets/img/img_loading.png"/>
-                <span>努力加载中</span>
+                <span style="margin-left:4px">努力加载中</span>
               </div>
             </template>
             <div class="list_shops">
@@ -44,7 +44,7 @@
                 <van-card @click="routeItem(item)">
                   <template #thumb>
                     <div class="detail_img">
-                      <img :src='item.merchantPicture' />
+                      <img :src='item.merchantPicture' alt="" :onerror="defaultImg"/>
                     </div>
                   </template>
                   <template #title>
@@ -52,31 +52,35 @@
                   </template>
                   <template #desc>
                     <div class="detail_desc flex_between">
-                      <div>
+                      <div style="display:flex">
                         <span class="desc_area ellipsis">{{item.areaName}}</span>
                         <span class="desc_type ellipsis">{{item.merchantTypeName}}</span>
                       </div>
                       <span class="desc_distance">{{item.distanceKm}}km</span>
                     </div>
                     <div @click.stop=""  class="detail_sale">
-                      <span class="area" @click="toTheShop(item.businessAreaCode,item.businessAreaName)">
-                        <svg-icon iconClass="search"></svg-icon>{{item.businessAreaName}}
+                      <span class="area ellipsis" @click="toTheShop(item.businessAreaCode,item.businessAreaName)">
+                        <img src="../assets/img/icon_merchant.png" alt="">
+                        <span>{{item.businessAreaName}}</span>
                       </span>
                     </div>
                   </template>
                   <template #tags>
                     <!--非我行收单商户-->
-                    <div class="detail_sale"  v-if="item.merchantIsOnself === 0">
+                    <div class="detail_sale" v-if="item.merchantIsOneself === 0">
                       <van-tag type="danger" plain class="sale_tag" v-for="(st,stIndex) in item.ruleList" :key="stIndex">
                         <span class="tag_text">满{{st.fullMeetMoney}}减{{st.fullReductionMoney}}</span>
                       </van-tag>
                     </div>
                     <!--我行收单商户且进行了活动配置-->
-                    <div class="detail_sale"  v-if="item.merchantIsOnself === 1 && item.isOnActivity === '1'">
-                      <van-tag type="danger" style="margin-right:5px">惠</van-tag>
-                      <van-tag type="danger" plain class="sale_tag" v-for="(st,stIndex) in item.ruleList" :key="stIndex">
-                        <span class="tag_text">满{{st.fullMeetMoney}}减{{st.fullReductionMoney}}</span>
-                      </van-tag>
+                    <div class="detail_sale flex_start" v-if="item.merchantIsOneself === 1 && item.isOnActivity === '1'"><!-- v-if="item.merchantIsOneself === 1 && item.isOnActivity === '1'"-->
+                      <img src="../assets/img/icon_sale.png" class="sale_tag sale" alt=""/>
+                      <!-- <van-tag type="danger" style="margin-right:5px">惠</van-tag> -->
+                      <div v-show="item.ruleList.length > 0">
+                        <van-tag type="danger" plain class="sale_tag" v-for="(st,stIndex) in item.ruleList" :key="stIndex">
+                          <span class="tag_text">满{{st.fullMeetMoney}}减{{st.fullReductionMoney}}</span>
+                        </van-tag>
+                      </div>
                     </div>
                   </template>
                 </van-card>
@@ -90,11 +94,11 @@
   </div>
 </template>
 <script>
-import DropdownMenu from '../components/DropdownMenu.vue'
-import SearchInput from '../components/SearchInput.vue'
-import SwiperImage from '../components/SwiperImage.vue'
-import { getTradeAreaList, getLocation, getShopsList, getMock } from '../api/shops'
-import SvgIcon from '../components/SvgIcon.vue'
+import DropdownMenu from '../components/DropdownMenu.vue';
+import { getTradeAreaList, getLocation, getShopsList, getMock } from '../api/shops';
+import SvgIcon from '../components/SvgIcon.vue';
+import { addBodyOver, moveBodyOver } from '../utils/commonInterface';
+
 let searchData = {
   cityId: '',//上送城市编号110100
   lon: '',//经度'39.232'
@@ -112,14 +116,14 @@ let searchData = {
 let needData = null//为了给本页商户点击商区和详情页商区传递通用cityId,lat,lon
 export default {
   name:'Home',
-  components:{ SearchInput, SwiperImage, DropdownMenu, SvgIcon},
+  components:{ DropdownMenu, SvgIcon},
   data(){
     return{
       selData:[],
       shopList:[],
       ifSearch: false,
       thisStyle: '',//有搜索弹框时阻止页面底部滚动
-      loading: true,//滚动到底部加载中
+      loading: false,//滚动到底部加载中
       finished: false,//商户列表已经到底了
       hasNextPage: true,
       ifSelShopList: false,//切换头部状态或查找商户时空状态效果
@@ -143,13 +147,13 @@ export default {
         // dns: '167'///生产环境注掉
       }
       // 获取商圈以及地区列表
-      // getTradeAreaList(data).then((res) => {
-      //   console.log(res,'商圈以及地区列表')
-      //   this.ifFailSel = !(res.stat === '00')
-      //   if(res.body) {
-      //     this.selData = res.body
-      //   }
-      // })
+      getTradeAreaList(data).then((res) => {
+        console.log(res,'商圈以及地区列表')
+        this.ifFailSel = !(res.stat === '00')
+        if(res.body) {
+          this.selData = res.body
+        }
+      })
     },
     //点击去该商圈所有商户列表的页面
     toTheShop(busAreaCode,busAreaName) {
@@ -165,6 +169,9 @@ export default {
     //点击搜索或者切换商圈或地区更新商户列表
     upDateShopList(val) {
       this.shopList = []
+      //如果是点击头部筛选条件，加载的过程中loading和finished效果不展示
+      this.loading = false
+      this.finished = false
       searchData = Object.assign(searchData, val)
       this.getShopList('sel')
     },
@@ -196,11 +203,9 @@ export default {
     },
     //商户列表加载到底部刷新
     onLoad() {
-      alert(1)
-      console.log(this.hasNextPage,'1111111')
       if(this.hasNextPage) {
         searchData.pageNo += 1
-        this.getShopList()
+        setTimeout(this.getShopList(),2000)
       }
     },
     closePop() {
@@ -218,11 +223,16 @@ export default {
     }
   },
   mounted() {
+    //加上这一步才能防止list外部div跟随滚动
+    addBodyOver()
     searchData.cityId = this.cityId
     searchData.lat = this.lat
     searchData.lon = this.lon
     this.getCurrentInfo()
     this.getShopList()
+  },
+  beforeDestroy(){
+    moveBodyOver()
   },
   watch:{
     ifSearch(val) {
@@ -232,12 +242,22 @@ export default {
         this.thisStyle = 'position: static'
       }
     }
+  },
+  computed: {
+    //商户列表里图片加载失败时显示的默认图片
+    defaultImg() {
+      return 'this.src="'+require('../assets/img/img_default.png')+'"'
+    }
   }
 }
 </script>
 <style scoped lang="less">
 @import url('../style/page/home.less');
 .home_content{
-  padding: 64px 16px 16px 16px;
+  padding-top: 64px;
+  .content_list{
+    height: calc(100% - 80px);
+    padding: 0 @P16 @P16 @P16;
+  }
 }
 </style>

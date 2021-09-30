@@ -2,7 +2,7 @@
     font-size: @F16;
     .detail_shop{
         .shop_img{
-            height: 192px;
+            height: 200px;
             position: relative;
             width: 100%;
             img{
@@ -50,6 +50,7 @@
             padding:0 16px;
             background: @CFFF;
             .desc_phone{
+                font-size: @F11;
                 img{
                     height: 22px;
                     width: 22px;
@@ -58,37 +59,54 @@
             .area{
                 height: 18px;
                 line-height: 18px;
-                padding: 0 5px;
+                padding: 1px 4px;
                 border-radius: 2px;
                 background: @CE85;
                 color: @CFFF;
-                .svg-icon{
-                  height: @F15;
-                  width: @F15;
-                  vertical-align: sub;
-                }
+                font-size: @F12;
+                display: inline-block;
+                max-width: calc(100% - 10px);
+                img{
+                    height: @F14;
+                    width: @F14;
+                    vertical-align: sub;
+                    margin-right: 3px;
+                  }
+            }
+            .desc_dis{
+                line-height:16px;
+                flex:8;
+                font-size: @F13;
+                color: @C666;
+                padding-right: @P16;
+                border-right: 1px solid #eeeeee;
             }
         }
         .name{
-            height: 43px;
-            line-height: 43px;
-        }
-        .info{
-            font-size: @F11;
-            color: @C666;
-            padding-bottom: @P16;
+            padding-top: 20px;
+            padding-bottom: 12px;
         }
        
     }
     .detail_discount{
-        margin-top: @M16;
+        margin-top: @M12;
         padding: @P16;
         background: @CFFF;
         .detail_sale{
             margin-top: @M12;
             .sale_tag{
                 margin-right: 5px;
-              }
+            }
+            img{
+                height: 18px;
+                width: 18px;
+            }
+            .van-tag{
+                height: 18px;
+                line-height: 18px;
+                font-size: @F13;
+                color: @CE85;
+            }
         }
         .discont_box{
             padding-top: @P16;
@@ -102,7 +120,7 @@
             margin-top: @M12;
             font-size: @F13;
             color: @C666;
-            line-height: 19px;
+            line-height: 18px;
             .desc_type{
                 flex-wrap: wrap;
             }

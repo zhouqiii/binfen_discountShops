@@ -143,25 +143,40 @@
       },
       {
         "merchantId": "11",
-        "areaName": "海淀区",
-        "merchantAddress": "上地科技大厦",
-        "businessAreaName":"西二旗商圈",
-        "merchantName": "每日优鲜",
+        "areaName": "海淀区海淀区海淀区海淀区海淀区海淀区海淀区",
+        "merchantAddress": "上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦",
+        "businessAreaName":"西二旗商圈西二旗商圈西二旗商圈西二旗商圈西二旗商圈西二旗商圈西二旗商圈西二旗商圈",
+        "merchantName": "每日优鲜每日优鲜每日优鲜每日优鲜每日优鲜每日优鲜",
         "merchantPicture": "1.png",
-        "merchantTypeName": "餐饮美食",
+        "merchantTypeName": "餐饮餐饮美食餐饮美食餐饮美食餐饮美食美食",
         "merchantTel": "18511989097",
-        "merchantExplain": "商铺说明",
+        "merchantExplain": "商铺说明商铺说明商铺说明商铺说明商铺说明",
         "merchantIsOnself": 1,
         "lon": 39.542637,
         "lat": 116.232922,
-        "activityExplain": "活动简述",
+        "activityExplain": "活动简述活动简述活动简述活动简述活动简述活动简述活动简述",
         "activityCardType": "全部中行信用卡",
-        "ruleExplain": "活动规则",
-        "activityName": "活动名称",
+        "ruleExplain": "活动规则活动规则活动规则活动规则活动规则",
+        "activityName": "活动名称活动名称活动名称活动名称活动名称活动名称",
         "businessAreaCode": "SQBH001",
         "merchnatActivity": "2",
         "merTypeCode": "SP001",
         "ruleList": [
+          {
+            "fullMeetMoney": 30000,
+            "fullReductionMoney": 10000,
+            "merchantId": "11"
+          },
+          {
+            "fullMeetMoney": 10,
+            "fullReductionMoney": 1,
+            "merchantId": "11"
+          },
+          {
+            "fullMeetMoney": 10000,
+            "fullReductionMoney": 1000,
+            "merchantId": "11"
+          },
           {
             "fullMeetMoney": 30,
             "fullReductionMoney": 1,
@@ -173,8 +188,8 @@
             "merchantId": "11"
           },
           {
-            "fullMeetMoney": 100,
-            "fullReductionMoney": 1,
+            "fullMeetMoney": 1030,
+            "fullReductionMoney": 1000,
             "merchantId": "11"
           }
         ],
@@ -184,301 +199,232 @@
         "isOnline": "0"
       },
       {
-        "merchantId": "1",
-        "areaName": "海淀区",
-        "businessAreaName":"西二旗商圈",
-        "merchantAddress": "上地科技大厦",
-        "merchantName": "每日优鲜",
+        "merchantId": "11",
+        "areaName": "海淀区海淀区海淀区海淀区海淀区海淀区海淀区",
+        "merchantAddress": "上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦",
+        "businessAreaName":"西二旗商圈西二旗商圈西二旗商圈西二旗商圈西二旗商圈西二旗商圈西二旗商圈西二旗商圈",
+        "merchantName": "每日优鲜每日优鲜每日优鲜每日优鲜每日优鲜每日优鲜",
         "merchantPicture": "1.png",
-        "merchantTypeName": "餐饮美食",
+        "merchantTypeName": "餐饮餐饮美食餐饮美食餐饮美食餐饮美食美食",
         "merchantTel": "18511989097",
-        "merchantExplain": "商铺说明",
+        "merchantExplain": "商铺说明商铺说明商铺说明商铺说明商铺说明",
         "merchantIsOnself": 1,
         "lon": 39.542637,
         "lat": 116.232922,
-        "activityExplain": "活动简述",
-        "activityCardType": "全部中行信用卡,全部中行信用卡全部中行信用卡,全部中行,全部中行信用卡全部中行信用卡,全部中行,全部中行,全部中行信用卡全部中行信用卡,全部中行,全部中行,",
-        "ruleExplain": "活动规则",
-        "activityName": "活动名称",
+        "activityExplain": "活动简述活动简述活动简述活动简述活动简述活动简述活动简述",
+        "activityCardType": "全部中行信用卡",
+        "ruleExplain": "活动规则活动规则活动规则活动规则活动规则",
+        "activityName": "活动名称活动名称活动名称活动名称活动名称活动名称",
         "businessAreaCode": "SQBH001",
         "merchnatActivity": "2",
         "merTypeCode": "SP001",
         "ruleList": [
           {
-            "fullMeetMoney": 28,
+            "fullMeetMoney": 30000,
+            "fullReductionMoney": 10000,
+            "merchantId": "11"
+          },
+          {
+            "fullMeetMoney": 10,
             "fullReductionMoney": 1,
-            "merchantId": "1"
+            "merchantId": "11"
+          },
+          {
+            "fullMeetMoney": 10000,
+            "fullReductionMoney": 1000,
+            "merchantId": "11"
+          },
+          {
+            "fullMeetMoney": 30,
+            "fullReductionMoney": 1,
+            "merchantId": "11"
+          },
+          {
+            "fullMeetMoney": 10,
+            "fullReductionMoney": 1,
+            "merchantId": "11"
+          },
+          {
+            "fullMeetMoney": 1030,
+            "fullReductionMoney": 1000,
+            "merchantId": "11"
           }
         ],
         "distance": "6714024",
         "startDate": "2021-01-22 12:09:00",
         "endDate": "2021-01-21 12:09:00",
-        "isOnline": "0",
-        "isOnActivity":"1"
+        "isOnline": "0"
       },
       {
-        "merchantId": "1",
-        "areaName": "海淀区",
-        "businessAreaName":"西二旗商圈",
-        "merchantAddress": "上地科技大厦",
-        "merchantName": "每日优鲜",
+        "merchantId": "11",
+        "areaName": "海淀区海淀区海淀区海淀区海淀区海淀区海淀区",
+        "merchantAddress": "上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦",
+        "businessAreaName":"西二旗商圈西二旗商圈西二旗商圈西二旗商圈西二旗商圈西二旗商圈西二旗商圈西二旗商圈",
+        "merchantName": "每日优鲜每日优鲜每日优鲜每日优鲜每日优鲜每日优鲜",
         "merchantPicture": "1.png",
-        "merchantTypeName": "餐饮美食",
+        "merchantTypeName": "餐饮餐饮美食餐饮美食餐饮美食餐饮美食美食",
         "merchantTel": "18511989097",
-        "merchantExplain": "商铺说明",
+        "merchantExplain": "商铺说明商铺说明商铺说明商铺说明商铺说明",
         "merchantIsOnself": 1,
         "lon": 39.542637,
         "lat": 116.232922,
-        "activityExplain": "活动简述",
-        "activityCardType": "全部中行信用卡,全部中行信用卡全部中行信用卡,全部中行,全部中行信用卡全部中行信用卡,全部中行,全部中行,全部中行信用卡全部中行信用卡,全部中行,全部中行,",
-        "ruleExplain": "活动规则",
-        "activityName": "活动名称",
+        "activityExplain": "活动简述活动简述活动简述活动简述活动简述活动简述活动简述",
+        "activityCardType": "全部中行信用卡",
+        "ruleExplain": "活动规则活动规则活动规则活动规则活动规则",
+        "activityName": "活动名称活动名称活动名称活动名称活动名称活动名称",
         "businessAreaCode": "SQBH001",
         "merchnatActivity": "2",
         "merTypeCode": "SP001",
         "ruleList": [
           {
-            "fullMeetMoney": 28,
+            "fullMeetMoney": 30000,
+            "fullReductionMoney": 10000,
+            "merchantId": "11"
+          },
+          {
+            "fullMeetMoney": 10,
             "fullReductionMoney": 1,
-            "merchantId": "1"
+            "merchantId": "11"
+          },
+          {
+            "fullMeetMoney": 10000,
+            "fullReductionMoney": 1000,
+            "merchantId": "11"
+          },
+          {
+            "fullMeetMoney": 30,
+            "fullReductionMoney": 1,
+            "merchantId": "11"
+          },
+          {
+            "fullMeetMoney": 10,
+            "fullReductionMoney": 1,
+            "merchantId": "11"
+          },
+          {
+            "fullMeetMoney": 1030,
+            "fullReductionMoney": 1000,
+            "merchantId": "11"
           }
         ],
         "distance": "6714024",
         "startDate": "2021-01-22 12:09:00",
         "endDate": "2021-01-21 12:09:00",
-        "isOnline": "0",
-        "isOnActivity":"1"
+        "isOnline": "0"
       },
       {
-        "merchantId": "1",
-        "areaName": "海淀区",
-        "businessAreaName":"西二旗商圈",
-        "merchantAddress": "上地科技大厦",
-        "merchantName": "每日优鲜",
+        "merchantId": "11",
+        "areaName": "海淀区海淀区海淀区海淀区海淀区海淀区海淀区",
+        "merchantAddress": "上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦",
+        "businessAreaName":"西二旗商圈西二旗商圈西二旗商圈西二旗商圈西二旗商圈西二旗商圈西二旗商圈西二旗商圈",
+        "merchantName": "每日优鲜每日优鲜每日优鲜每日优鲜每日优鲜每日优鲜",
         "merchantPicture": "1.png",
-        "merchantTypeName": "餐饮美食",
+        "merchantTypeName": "餐饮餐饮美食餐饮美食餐饮美食餐饮美食美食",
         "merchantTel": "18511989097",
-        "merchantExplain": "商铺说明",
+        "merchantExplain": "商铺说明商铺说明商铺说明商铺说明商铺说明",
         "merchantIsOnself": 1,
         "lon": 39.542637,
         "lat": 116.232922,
-        "activityExplain": "活动简述",
-        "activityCardType": "全部中行信用卡,全部中行信用卡全部中行信用卡,全部中行,全部中行信用卡全部中行信用卡,全部中行,全部中行,全部中行信用卡全部中行信用卡,全部中行,全部中行,",
-        "ruleExplain": "活动规则",
-        "activityName": "活动名称",
+        "activityExplain": "活动简述活动简述活动简述活动简述活动简述活动简述活动简述",
+        "activityCardType": "全部中行信用卡",
+        "ruleExplain": "活动规则活动规则活动规则活动规则活动规则",
+        "activityName": "活动名称活动名称活动名称活动名称活动名称活动名称",
         "businessAreaCode": "SQBH001",
         "merchnatActivity": "2",
         "merTypeCode": "SP001",
         "ruleList": [
           {
-            "fullMeetMoney": 28,
+            "fullMeetMoney": 30000,
+            "fullReductionMoney": 10000,
+            "merchantId": "11"
+          },
+          {
+            "fullMeetMoney": 10,
             "fullReductionMoney": 1,
-            "merchantId": "1"
+            "merchantId": "11"
+          },
+          {
+            "fullMeetMoney": 10000,
+            "fullReductionMoney": 1000,
+            "merchantId": "11"
+          },
+          {
+            "fullMeetMoney": 30,
+            "fullReductionMoney": 1,
+            "merchantId": "11"
+          },
+          {
+            "fullMeetMoney": 10,
+            "fullReductionMoney": 1,
+            "merchantId": "11"
+          },
+          {
+            "fullMeetMoney": 1030,
+            "fullReductionMoney": 1000,
+            "merchantId": "11"
           }
         ],
         "distance": "6714024",
         "startDate": "2021-01-22 12:09:00",
         "endDate": "2021-01-21 12:09:00",
-        "isOnline": "0",
-        "isOnActivity":"1"
+        "isOnline": "0"
       },
       {
-        "merchantId": "1",
-        "areaName": "海淀区",
-        "businessAreaName":"西二旗商圈",
-        "merchantAddress": "上地科技大厦",
-        "merchantName": "每日优鲜",
+        "merchantId": "11",
+        "areaName": "海淀区海淀区海淀区海淀区海淀区海淀区海淀区",
+        "merchantAddress": "上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦上地科技大厦",
+        "businessAreaName":"西二旗商圈西二旗商圈西二旗商圈西二旗商圈西二旗商圈西二旗商圈西二旗商圈西二旗商圈",
+        "merchantName": "每日优鲜每日优鲜每日优鲜每日优鲜每日优鲜每日优鲜",
         "merchantPicture": "1.png",
-        "merchantTypeName": "餐饮美食",
+        "merchantTypeName": "餐饮餐饮美食餐饮美食餐饮美食餐饮美食美食",
         "merchantTel": "18511989097",
-        "merchantExplain": "商铺说明",
+        "merchantExplain": "商铺说明商铺说明商铺说明商铺说明商铺说明",
         "merchantIsOnself": 1,
         "lon": 39.542637,
         "lat": 116.232922,
-        "activityExplain": "活动简述",
-        "activityCardType": "全部中行信用卡,全部中行信用卡全部中行信用卡,全部中行,全部中行信用卡全部中行信用卡,全部中行,全部中行,全部中行信用卡全部中行信用卡,全部中行,全部中行,",
-        "ruleExplain": "活动规则",
-        "activityName": "活动名称",
+        "activityExplain": "活动简述活动简述活动简述活动简述活动简述活动简述活动简述",
+        "activityCardType": "全部中行信用卡",
+        "ruleExplain": "活动规则活动规则活动规则活动规则活动规则",
+        "activityName": "活动名称活动名称活动名称活动名称活动名称活动名称",
         "businessAreaCode": "SQBH001",
         "merchnatActivity": "2",
         "merTypeCode": "SP001",
         "ruleList": [
           {
-            "fullMeetMoney": 28,
-            "fullReductionMoney": 1,
-            "merchantId": "1"
-          }
-        ],
-        "distance": "6714024",
-        "startDate": "2021-01-22 12:09:00",
-        "endDate": "2021-01-21 12:09:00",
-        "isOnline": "0",
-        "isOnActivity":"1"
-      },
-      {
-        "merchantId": "1",
-        "areaName": "海淀区",
-        "businessAreaName":"西二旗商圈",
-        "merchantAddress": "上地科技大厦",
-        "merchantName": "每日优鲜",
-        "merchantPicture": "1.png",
-        "merchantTypeName": "餐饮美食",
-        "merchantTel": "18511989097",
-        "merchantExplain": "商铺说明",
-        "merchantIsOnself": 1,
-        "lon": 39.542637,
-        "lat": 116.232922,
-        "activityExplain": "活动简述",
-        "activityCardType": "全部中行信用卡,全部中行信用卡全部中行信用卡,全部中行,全部中行信用卡全部中行信用卡,全部中行,全部中行,全部中行信用卡全部中行信用卡,全部中行,全部中行,",
-        "ruleExplain": "活动规则",
-        "activityName": "活动名称",
-        "businessAreaCode": "SQBH001",
-        "merchnatActivity": "2",
-        "merTypeCode": "SP001",
-        "ruleList": [
+            "fullMeetMoney": 30000,
+            "fullReductionMoney": 10000,
+            "merchantId": "11"
+          },
           {
-            "fullMeetMoney": 28,
+            "fullMeetMoney": 10,
             "fullReductionMoney": 1,
-            "merchantId": "1"
-          }
-        ],
-        "distance": "6714024",
-        "startDate": "2021-01-22 12:09:00",
-        "endDate": "2021-01-21 12:09:00",
-        "isOnline": "0",
-        "isOnActivity":"1"
-      },
-      {
-        "merchantId": "1",
-        "areaName": "海淀区",
-        "businessAreaName":"西二旗商圈",
-        "merchantAddress": "上地科技大厦",
-        "merchantName": "每日优鲜",
-        "merchantPicture": "1.png",
-        "merchantTypeName": "餐饮美食",
-        "merchantTel": "18511989097",
-        "merchantExplain": "商铺说明",
-        "merchantIsOnself": 1,
-        "lon": 39.542637,
-        "lat": 116.232922,
-        "activityExplain": "活动简述",
-        "activityCardType": "全部中行信用卡,全部中行信用卡全部中行信用卡,全部中行,全部中行信用卡全部中行信用卡,全部中行,全部中行,全部中行信用卡全部中行信用卡,全部中行,全部中行,",
-        "ruleExplain": "活动规则",
-        "activityName": "活动名称",
-        "businessAreaCode": "SQBH001",
-        "merchnatActivity": "2",
-        "merTypeCode": "SP001",
-        "ruleList": [
+            "merchantId": "11"
+          },
           {
-            "fullMeetMoney": 28,
-            "fullReductionMoney": 1,
-            "merchantId": "1"
-          }
-        ],
-        "distance": "6714024",
-        "startDate": "2021-01-22 12:09:00",
-        "endDate": "2021-01-21 12:09:00",
-        "isOnline": "0",
-        "isOnActivity":"1"
-      },
-      {
-        "merchantId": "1",
-        "areaName": "海淀区",
-        "businessAreaName":"西二旗商圈",
-        "merchantAddress": "上地科技大厦",
-        "merchantName": "每日优鲜",
-        "merchantPicture": "1.png",
-        "merchantTypeName": "餐饮美食",
-        "merchantTel": "18511989097",
-        "merchantExplain": "商铺说明",
-        "merchantIsOnself": 1,
-        "lon": 39.542637,
-        "lat": 116.232922,
-        "activityExplain": "活动简述",
-        "activityCardType": "全部中行信用卡,全部中行信用卡全部中行信用卡,全部中行,全部中行信用卡全部中行信用卡,全部中行,全部中行,全部中行信用卡全部中行信用卡,全部中行,全部中行,",
-        "ruleExplain": "活动规则",
-        "activityName": "活动名称",
-        "businessAreaCode": "SQBH001",
-        "merchnatActivity": "2",
-        "merTypeCode": "SP001",
-        "ruleList": [
+            "fullMeetMoney": 10000,
+            "fullReductionMoney": 1000,
+            "merchantId": "11"
+          },
           {
-            "fullMeetMoney": 28,
+            "fullMeetMoney": 30,
             "fullReductionMoney": 1,
-            "merchantId": "1"
-          }
-        ],
-        "distance": "6714024",
-        "startDate": "2021-01-22 12:09:00",
-        "endDate": "2021-01-21 12:09:00",
-        "isOnline": "0",
-        "isOnActivity":"1"
-      },
-      {
-        "merchantId": "1",
-        "areaName": "海淀区",
-        "businessAreaName":"西二旗商圈",
-        "merchantAddress": "上地科技大厦",
-        "merchantName": "每日优鲜",
-        "merchantPicture": "1.png",
-        "merchantTypeName": "餐饮美食",
-        "merchantTel": "18511989097",
-        "merchantExplain": "商铺说明",
-        "merchantIsOnself": 1,
-        "lon": 39.542637,
-        "lat": 116.232922,
-        "activityExplain": "活动简述",
-        "activityCardType": "全部中行信用卡,全部中行信用卡全部中行信用卡,全部中行,全部中行信用卡全部中行信用卡,全部中行,全部中行,全部中行信用卡全部中行信用卡,全部中行,全部中行,",
-        "ruleExplain": "活动规则",
-        "activityName": "活动名称",
-        "businessAreaCode": "SQBH001",
-        "merchnatActivity": "2",
-        "merTypeCode": "SP001",
-        "ruleList": [
+            "merchantId": "11"
+          },
           {
-            "fullMeetMoney": 28,
+            "fullMeetMoney": 10,
             "fullReductionMoney": 1,
-            "merchantId": "1"
-          }
-        ],
-        "distance": "6714024",
-        "startDate": "2021-01-22 12:09:00",
-        "endDate": "2021-01-21 12:09:00",
-        "isOnline": "0",
-        "isOnActivity":"1"
-      },
-      {
-        "merchantId": "1",
-        "areaName": "海淀区",
-        "businessAreaName":"西二旗商圈",
-        "merchantAddress": "上地科技大厦",
-        "merchantName": "每日优鲜",
-        "merchantPicture": "1.png",
-        "merchantTypeName": "餐饮美食",
-        "merchantTel": "18511989097",
-        "merchantExplain": "商铺说明",
-        "merchantIsOnself": 1,
-        "lon": 39.542637,
-        "lat": 116.232922,
-        "activityExplain": "活动简述",
-        "activityCardType": "全部中行信用卡,全部中行信用卡全部中行信用卡,全部中行,全部中行信用卡全部中行信用卡,全部中行,全部中行,全部中行信用卡全部中行信用卡,全部中行,全部中行,",
-        "ruleExplain": "活动规则",
-        "activityName": "活动名称",
-        "businessAreaCode": "SQBH001",
-        "merchnatActivity": "2",
-        "merTypeCode": "SP001",
-        "ruleList": [
+            "merchantId": "11"
+          },
           {
-            "fullMeetMoney": 28,
-            "fullReductionMoney": 1,
-            "merchantId": "1"
+            "fullMeetMoney": 1030,
+            "fullReductionMoney": 1000,
+            "merchantId": "11"
           }
         ],
         "distance": "6714024",
         "startDate": "2021-01-22 12:09:00",
         "endDate": "2021-01-21 12:09:00",
-        "isOnline": "0",
-        "isOnActivity":"1"
+        "isOnline": "0"
       }
     ],
     "hasNextPage": "0",

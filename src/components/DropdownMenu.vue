@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="dropdown">
-      <van-dropdown-menu>
+      <van-dropdown-menu active-color="#F44336">
         <van-dropdown-item :title="selArea" ref="areaDrop">
           <div v-if="ifFailList" @click="reLoad" class="drop_reload">
             <img src="../assets/img/icon_reload.png"/>
@@ -15,7 +15,7 @@
             @click-item="cityChange"
           />
         </van-dropdown-item>
-        <van-dropdown-item v-model='merTypeCode' :title='selType' :options="typeOptions" @change='typeChange'>
+        <van-dropdown-item v-model='merTypeCode' :title='selType' :options="typeOptions" @change='typeChange' ref="typeDrop">
           <div v-if="ifFailList" @click="reLoad" class="drop_reload">
             <img src="../assets/img/icon_reload.png"/>
             <span>点击重新加载</span>
@@ -33,9 +33,9 @@
           placeholder="请输入商户名称"
           @input="searchShop"
         >
-          <!-- <template v-slot:left-icon>
-            <svg-icon iconClass="search"></svg-icon>
-          </template> -->
+          <template v-slot:left-icon>
+            <img src="../assets/img/icon_search.png" class="header_img"/>
+          </template>
         </van-search>
       </div>
     </div>
@@ -48,9 +48,7 @@ let sendData = {
   areaId: '',//区域编号
   search: '',//搜索关键字
 }
-import SearchInput from './SearchInput.vue';
 export default {
-  components: { SearchInput },
   name: 'DropDownMenu',
   props: ['allData','showSearch','ifFailSel'],
   data() {
@@ -115,7 +113,8 @@ export default {
     },
     //头部选项加载失败--重新加载商户分类和商圈头部选项
     reLoad() {
-      this.$refs.areaDrop.toggle();//把ref=areaDrop对应的dropDown关起来
+      this.$refs.typeDrop.toggle(false);//把ref=typeDrop对应的dropDown关起来
+      this.$refs.areaDrop.toggle(false);//把ref=areaDrop对应的dropDown关起来
       this.$emit('upDateSelectList')
     }
   },
@@ -152,7 +151,7 @@ export default {
         val.merTypeList.forEach((item) => {
           let obj = item
           obj = JSON.parse(JSON.stringify(obj).replace(/merchantTypeName/g, 'text'))
-          obj = JSON.parse(JSON.stringify(obj).replace(/merchantTypeCode/g, 'value'))
+          obj = JSON.parse(JSON.stringify(obj).replace(/merTypeCode/g, 'value'))
           this.typeOptions.push(obj)
         });
       }
@@ -195,5 +194,9 @@ export default {
   z-index: 110;
   bottom: 0;
   background: rgba(0, 0, 0, 0.4);
+  .header_img{
+    height: 22px;
+    width: 22px;
+  }
 }
 </style>
