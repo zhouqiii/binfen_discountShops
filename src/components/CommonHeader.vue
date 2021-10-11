@@ -62,6 +62,8 @@ export default {
         });
       }else if(this.type === '1') {
         this.$router.go(-1)
+      }else if(this.type === '5') {
+        this.$router.back()
       }
     },
   },

@@ -1,14 +1,14 @@
 <!--
  * @Author: your name
  * @Date: 2021-09-24 10:27:10
- * @LastEditTime: 2021-09-29 11:35:18
+ * @LastEditTime: 2021-10-11 14:54:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \binfen_discountShops\src\views\ShopDetail.vue
 -->
 <template>
   <div class="detail">
-    <common-header type="1" title="商户详情"></common-header>
+    <common-header type="5" title="商户详情"></common-header>
     <div class="detail_shop">
       <div class="shop_img">
         <img :src="shop.merchantPicture" alt="" :onerror="defaultImg">
@@ -47,13 +47,26 @@
       </div>
     </div>
     <!--我行收单商户且进行了活动配置-->
-    <div v-if="shop.merchantIsOneself === 0  || (shop.merchantIsOneself === 1 && shop.activityExplain)" class="detail_discount">
+    <div v-if="(shop.merchantIsOneself === '0'  && shop.activityName) || (shop.merchantIsOneself === '1')" class="detail_discount">
       <div class="title">优惠信息</div>
-      <div class="detail_sale flex_start">
+      <div class="detail_sale flex_start"  v-if="shop.merchantIsOneself === '1' && shop.ruleList.length > 0">
         <img src="../assets/img/icon_sale.png" class="sale_tag" alt=""/>
-        <div v-show="shop.ruleList.length > 0">
+        <div>
+          <!-- <div style="width:20%" v-for="(st,stIndex) in shop.ruleList" :key="stIndex">
+            <van-tag type="danger" plain class="sale_tag">
+              <span>{{st.fullMeetMoney}}减{{st.fullReductionMoney}}</span>
+            </van-tag>
+          </div> -->
           <van-tag type="danger" plain class="sale_tag" v-for="(st,stIndex) in shop.ruleList" :key="stIndex">
-            <span>满{{st.fullMeetMoney}}减{{st.fullReductionMoney}}</span>
+            <span>{{st.fullMeetMoney}}减{{st.fullReductionMoney}}</span>
+          </van-tag>
+        </div>
+      </div>
+      <div class="detail_sale flex_start"  v-if="shop.merchantIsOneself === '0'  && shop.activityName">
+        <img src="../assets/img/icon_sale.png" class="sale_tag" alt=""/>
+        <div>
+          <van-tag type="danger" plain class="sale_tag">
+            <span>{{shop.activityName}}</span>
           </van-tag>
         </div>
       </div>
@@ -72,17 +85,17 @@
       <div class="discont_box">
         <div class="discount_title">活动卡种</div>
         <div class="discount_desc">
-          <div v-if="shop.activityCardTypeList.length > 3" class="desc_type flex_between">
-            <span v-for='(item,index) in shop.activityCardTypeList.slice(0,3)' style="width:30%" class="ellipsis">{{item}};</span>
-            <span v-for='(item,index) in shop.activityCardTypeList.slice(3)' style="width:30%"  class="ellipsis" v-show="activeCollapse.length > 0">{{item}};</span>
+          <div v-if="shop.activityCardTypeList.length > 3" class="desc_type flex_row">
+            <span v-for='(item,index) in shop.activityCardTypeList.slice(0,3)' :key="index" style="width:30%" class="ellipsis">{{item}};</span>
+            <span v-for='(item,index) in shop.activityCardTypeList.slice(3)' :key="index" style="width:30%"  class="ellipsis" v-show="activeCollapse.length > 0">{{item}};</span>
             <van-collapse v-model="activeCollapse" @change="getCollapse" class="collapse_drop">
               <van-collapse-item title="" name='1'>
                 <template #value>{{collapse}}</template>
               </van-collapse-item>
             </van-collapse>
           </div>
-          <div v-else class="desc_type flex_between">
-            <span v-for='(item,index) in shop.activityCardTypeList' style="width:30%">{{item}};</span>
+          <div v-else class="desc_type flex_row">
+            <span v-for='(item,index) in shop.activityCardTypeList' :key="index" style="width:30%">{{item}};</span>
           </div>
         </div>
       </div>
@@ -95,6 +108,7 @@
 </template>
 <script>
 import SvgIcon from '../components/SvgIcon.vue'
+
 export default {
   components: { SvgIcon },
     name: 'ShopDetail',
@@ -118,7 +132,8 @@ export default {
         },
         // time: 0,
         collapse:'收起',//
-        activeCollapse: ['1']
+        activeCollapse: ['1'],
+        routeFlag: 0,//0-从商券列表到详情再返回商券列表需要缓存 1-从详情点击商圈到商圈列表不需要缓存
       }
     },
     methods:{
@@ -134,6 +149,7 @@ export default {
       },
       //点击去该商圈所有商户列表的页面
       toTheShop() {
+        this.routeFlag = 1
         let needData = JSON.parse(this.$route.query.commonData)
         needData.businessAreaCode = this.shop.businessAreaCode
         this.$router.push({
@@ -152,6 +168,14 @@ export default {
       data.activityCardTypeList = data.activityCardType.split(',')
       this.shop =Object.assign(this.shop, data)
       console.log(this.shop,'商户信息')
+    },
+    beforeRouteLeave: function(to, from, next) {
+      if(to.path === '/' || (to.path==='/ShopListArea' && this.routeFlag === 0)) {
+        to.meta.keepAlive = true
+      }else{
+        to.meta.keepAlive = false
+      }
+      next()
     },
     computed: {
     //商户图片加载失败时显示的默认图片

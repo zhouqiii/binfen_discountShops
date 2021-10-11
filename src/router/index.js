@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-09-24 10:27:10
- * @LastEditTime: 2021-09-27 10:54:02
+ * @LastEditTime: 2021-10-11 10:56:57
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \binfen_discountShops\src\router\index.js
@@ -17,6 +17,9 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    meta: {
+      keepAlive: true,
+    }
   },
   {
     path: '/ShopDetail',
@@ -27,6 +30,9 @@ const routes = [
     path: '/ShopListArea',
     name: 'ShopListArea',
     component: () => import('../views/ShopListArea.vue'),
+    meta: {
+      keepAlive: true,
+    }
   },
   // {
   //   path: '/ShopLocation',

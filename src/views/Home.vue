@@ -14,15 +14,23 @@
       @upDateSelectList='getTradeArea'
     ></dropdown-menu>
     <div class="home_content" :style="thisStyle">
-      <div class="content_list">
-        <div v-if="ifSelShopList" class="list_nocontent">
+      <div class="content_list" ref="listBox">
+        <div v-if="noListFlag === 'sel'" class="list_nocontent">
           <img src="../assets/img/img_nocontent.png"/>
           <div>没有找到合适的商户～</div>
         </div>
-        <div v-if="ifNearShopList" class="list_nocontent">
+        <div v-else-if="noListFlag === 'near'" class="list_nocontent">
           <img src="../assets/img/img_nolist.png"/>
           <div>您附近暂无优惠商户～</div>
         </div>
+        <!-- <div v-if="ifNetShopList" class="list_nocontent">
+          <img src="../assets/img/icon_network.png"/>
+          <div style="margin-top:12px">网络出现了问题，获取数据失败</div>
+          <div class="list_reload">
+            <img src="../assets/img/icon_reload.png"/>
+            <span>重新加载</span>
+          </div>
+        </div> -->
         <!-- <van-pull-refresh v-else> -->
           <van-list
             v-else
@@ -58,27 +66,28 @@
                       </div>
                       <span class="desc_distance">{{item.distanceKm}}km</span>
                     </div>
-                    <div @click.stop=""  class="detail_sale">
-                      <span class="area ellipsis" @click="toTheShop(item.businessAreaCode,item.businessAreaName)">
+                    <div class="detail_sale">
+                      <span class="area ellipsis" @click.stop="toTheShop(item.businessAreaCode,item.businessAreaName)">
                         <img src="../assets/img/icon_merchant.png" alt="">
                         <span>{{item.businessAreaName}}</span>
                       </span>
                     </div>
                   </template>
                   <template #tags>
-                    <!--非我行收单商户-->
-                    <div class="detail_sale" v-if="item.merchantIsOneself === 0">
-                      <van-tag type="danger" plain class="sale_tag" v-for="(st,stIndex) in item.ruleList" :key="stIndex">
-                        <span class="tag_text">满{{st.fullMeetMoney}}减{{st.fullReductionMoney}}</span>
+                    <!--非我行收单商户判断ruleList-->
+                    <div class="detail_sale flex_start" v-if="item.merchantIsOneself === '0' && item.activityName">
+                      <img src="../assets/img/icon_sale.png" class="sale_tag sale" alt=""/>
+                      <van-tag type="danger" plain class="sale_tag">
+                        <span class="tag_text">{{item.activityName}}</span>
                       </van-tag>
                     </div>
                     <!--我行收单商户且进行了活动配置-->
-                    <div class="detail_sale flex_start" v-if="item.merchantIsOneself === 1 && item.isOnActivity === '1'"><!-- v-if="item.merchantIsOneself === 1 && item.isOnActivity === '1'"-->
+                    <div class="detail_sale flex_start" v-if="item.merchantIsOneself === '1' && item.ruleList.length > 0"><!-- v-if="item.merchantIsOneself === 1 && item.isOnActivity === '1'"-->
                       <img src="../assets/img/icon_sale.png" class="sale_tag sale" alt=""/>
                       <!-- <van-tag type="danger" style="margin-right:5px">惠</van-tag> -->
                       <div v-show="item.ruleList.length > 0">
                         <van-tag type="danger" plain class="sale_tag" v-for="(st,stIndex) in item.ruleList" :key="stIndex">
-                          <span class="tag_text">满{{st.fullMeetMoney}}减{{st.fullReductionMoney}}</span>
+                          <span class="tag_text">{{st.fullMeetMoney}}减{{st.fullReductionMoney}}</span>
                         </van-tag>
                       </div>
                     </div>
@@ -95,7 +104,7 @@
 </template>
 <script>
 import DropdownMenu from '../components/DropdownMenu.vue';
-import { getTradeAreaList, getLocation, getShopsList, getMock } from '../api/shops';
+import { getTradeAreaList, getCityId, getShopsList, getMock } from '../api/shops';
 import SvgIcon from '../components/SvgIcon.vue';
 import { addBodyOver, moveBodyOver } from '../utils/commonInterface';
 
@@ -126,8 +135,8 @@ export default {
       loading: false,//滚动到底部加载中
       finished: false,//商户列表已经到底了
       hasNextPage: true,
-      ifSelShopList: false,//切换头部状态或查找商户时空状态效果
-      ifNearShopList: false,//首页初次进来附近无商户效果
+      noListFlag: '',
+      // ifNetShopList: false,//首页列表获取request连接失败
       ifFailSel: true
     }
   },
@@ -169,43 +178,37 @@ export default {
     //点击搜索或者切换商圈或地区更新商户列表
     upDateShopList(val) {
       this.shopList = []
-      //如果是点击头部筛选条件，加载的过程中loading和finished效果不展示
-      this.loading = false
-      this.finished = false
       searchData = Object.assign(searchData, val)
       this.getShopList('sel')
     },
     getShopList(type) {
-      getMock().then((res) => {
-        this.shopList = this.shopList.concat(res.data.body.shopList)
+      getShopsList(searchData).then((res) => {
+        //加载状态结束
+        this.loading = false
+        console.log(res.body,'这是拿到的商户列表')
+        const dataList = res.body.shopList
+        if(dataList.length > 0) {
+          dataList.forEach((item) => {
+            this.$set(item,'distanceKm',Math.round((parseFloat(item.distance)/1000)*100)/100)
+          });
+        }
+        this.shopList = this.shopList.concat(dataList)
+        if(this.shopList.length === 0) {
+          if(type === 'sel') {
+            this.noListFlag = this.shopList.length === 0 ?  'sel' : ''
+          }else {
+            this.noListFlag = this.shopList.length === 0 ?  'near' : ''
+          }
+        }
+        this.hasNextPage = res.body.hasNextPage === '1'
+        this.finished = res.body.hasNextPage === '0'
       })
-      // getShopsList(searchData).then((res) => {
-      //   // 加载状态结束
-      //   this.loading = false
-      //   console.log(res.body,'这是拿到的商户列表')
-      //   const dataList = res.body.shopList
-      //   if(dataList.length > 0) {
-      //     dataList.forEach((item) => {
-      //       this.$set(item,'distanceKm',Math.round((parseFloat(item.distance)/1000)*100)/100)
-      //     });
-      //   }
-      //   this.shopList = this.shopList.concat(dataList)
-      //   if(this.shopList.length === 0) {
-      //     if(type === 'sel') {
-      //       this.ifSelShopList = this.shopList.length === 0 
-      //     }else {
-      //       this.ifNearShopList = this.shopList.length === 0
-      //     }
-      //   }
-      //   this.hasNextPage = res.body.hasNextPage === '1'
-      //   this.finished = res.body.hasNextPage === '0'
-      // })
     },
     //商户列表加载到底部刷新
     onLoad() {
       if(this.hasNextPage) {
         searchData.pageNo += 1
-        setTimeout(this.getShopList(),2000)
+        this.getShopList()
       }
     },
     closePop() {
@@ -220,19 +223,26 @@ export default {
           commonData: JSON.stringify(needData)
         }
       })
+    },
+    handleScroll() {
+      this.$store.state.module1.homeTop = this.$refs.listBox.scrollTop
     }
   },
+  activated() {
+    addBodyOver() //加上这一步才能防止list外部div跟随滚动
+    this.$refs.listBox.addEventListener('scroll',this.handleScroll,true)
+    this.$refs.listBox.scrollTop = this.$store.state.module1.homeTop
+  },
+  deactivated() {
+    moveBodyOver()
+    this.$refs.listBox.removeEventListener('scroll',this.handleScroll,true)
+  },
   mounted() {
-    //加上这一步才能防止list外部div跟随滚动
-    addBodyOver()
     searchData.cityId = this.cityId
     searchData.lat = this.lat
     searchData.lon = this.lon
     this.getCurrentInfo()
     this.getShopList()
-  },
-  beforeDestroy(){
-    moveBodyOver()
   },
   watch:{
     ifSearch(val) {
@@ -244,10 +254,13 @@ export default {
     }
   },
   computed: {
-    //商户列表里图片加载失败时显示的默认图片
-    defaultImg() {
+    defaultImg() {//商户列表里图片加载失败时显示的默认图片
       return 'this.src="'+require('../assets/img/img_default.png')+'"'
     }
+  },
+  beforeRouteLeave(to, from, next) {
+    to.meta.keepAlive = false
+    next()
   }
 }
 </script>
@@ -256,8 +269,8 @@ export default {
 .home_content{
   padding-top: 64px;
   .content_list{
-    height: calc(100% - 80px);
-    padding: 0 @P16 @P16 @P16;
+    height: calc(100% - 64px);
+    padding: 0 @P16;
   }
 }
 </style>

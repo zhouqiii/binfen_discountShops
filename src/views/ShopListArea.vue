@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-09-26 20:03:11
- * @LastEditTime: 2021-09-30 10:13:12
+ * @LastEditTime: 2021-10-11 11:35:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \binfen_discountShops\src\views\AreaShopList.vue
@@ -13,7 +13,7 @@
         <img src="../assets/img/icon_search.png" @click="ifSearch = true" class="header_img"/>
       </template>
     </common-header>
-    <div class="search_pop" v-if="ifSearch" @click="closePop">
+    <div class="search_pop" v-show="ifSearch" @click="closePop">
       <div @click.stop=""><!--阻止冒泡-->
         <van-search
           v-model="searchVal"
@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="home_content" :style="thisStyle">
-      <div class="content_list">
+      <div class="content_list" ref="areaBox">
         <div v-if="listLength" class="list_nocontent">
           <img src="../assets/img/img_nocontent.png"/>
           <div>没有找到合适的商户~</div>
@@ -40,7 +40,7 @@
             v-model="loading"
             :finished="finished"
             :immediate-check="false"
-            :offset="50"
+            :offset="10"
             finished-text=""
             @load="onLoad"
           >
@@ -77,18 +77,22 @@
                     </div>
                   </template>
                   <template #tags>
-                    <!--非我行收单商户-->
-                    <div class="detail_sale" v-if="item.merchantIsOnself === 0">
-                      <van-tag type="danger" plain class="sale_tag" v-for="(st,stIndex) in item.ruleList" :key="stIndex">
-                        <span class="tag_text">满{{st.fullMeetMoney}}减{{st.fullReductionMoney}}</span>
+                    <!--非我行收单商户判断activityName-->
+                    <div class="detail_sale flex_start" v-if="item.merchantIsOneself === '0' && item.activityName">
+                      <img src="../assets/img/icon_sale.png" class="sale_tag sale" alt=""/>
+                      <van-tag type="danger" plain class="sale_tag">
+                        <span class="tag_text">{{item.activityName}}</span>
                       </van-tag>
                     </div>
-                    <!--我行收单商户且进行了活动配置-->
-                    <div class="detail_sale flex_start" v-if="item.merchantIsOnself === 1 && item.isOnActivity === '1'">
+                    <!--我行收单商户且进行了ruleList-->
+                    <div class="detail_sale flex_start" v-if="item.merchantIsOneself === '1' && item.ruleList.length > 0"><!-- v-if="item.merchantIsOneself === 1 && item.isOnActivity === '1'"-->
                       <img src="../assets/img/icon_sale.png" class="sale_tag sale" alt=""/>
-                      <van-tag type="danger" plain class="sale_tag" v-for="(st,stIndex) in item.ruleList" :key="stIndex">
-                        <span class="tag_text">满{{st.fullMeetMoney}}减{{st.fullReductionMoney}}</span>
-                      </van-tag>
+                      <!-- <van-tag type="danger" style="margin-right:5px">惠</van-tag> -->
+                      <div v-show="item.ruleList.length > 0">
+                        <van-tag type="danger" plain class="sale_tag" v-for="(st,stIndex) in item.ruleList" :key="stIndex">
+                          <span class="tag_text">{{st.fullMeetMoney}}减{{st.fullReductionMoney}}</span>
+                        </van-tag>
+                      </div>
                     </div>
                   </template>
                 </van-card>
@@ -182,7 +186,17 @@ export default {
       this.ifSearch = false
       this.searchVal = ''
       searchData.search = ''
+    },
+    handleScroll() {
+      this.$store.state.module1.areaTop = this.$refs.areaBox.scrollTop
     }
+  },
+  activated() {
+    this.$refs.areaBox.scrollTop = this.$store.state.module1.areaTop
+    this.$refs.areaBox.addEventListener('scroll',this.handleScroll,true)
+  },
+  deactivated() {
+    this.$refs.areaBox.removeEventListener('scroll',this.handleScroll,true)
   },
   mounted() {
     searchData = Object.assign(searchData, JSON.parse(this.$route.query.info))
@@ -203,7 +217,10 @@ export default {
     defaultImg() {
       return 'this.src="'+require('../assets/img/img_default.png')+'"'
     }
-  }
+  },
+  beforeDestroy() {
+    this.$refs.areaBox.removeEventListener('scroll',this.handleScroll,true)
+  },
 }
 </script>
 <style scoped lang="less">

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-09-24 10:27:10
- * @LastEditTime: 2021-09-30 09:50:05
+ * @LastEditTime: 2021-10-09 11:46:03
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \binfen_discountShops\vue.config.js
@@ -48,7 +48,7 @@ module.exports = {
   },
   devServer: {
     proxy: {
-      '/dsmsmqsc': {
+      '/dsmsmqsc': {//dsmsboc
         target: 'http://22.187.19.164:9081',//唐荣华本地--http://22.11.236.167:8081 dns='167'//服务器地址22.187.19.164:9081
         changeOrigin: true,
         ws: true,
