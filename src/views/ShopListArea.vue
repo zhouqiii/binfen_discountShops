@@ -171,7 +171,8 @@ export default {
       this.$router.push({
         path:'/ShopDetail',
         query: { 
-          data: JSON.stringify(data)
+          data: JSON.stringify(data),
+          commonData: this.$route.query.info
         }
       })
     },
