@@ -9,7 +9,7 @@
       </div>
       <div class="guide_shop">
         <div class="shop_name ellipsis">{{shopInfo.merchantName}}</div>
-        <div class="shop_location ellipsis" @click="getLocation"><span>{{shopInfo.merchantAddress}}</span></div>
+        <div class="shop_location ellipsis"><span>{{shopInfo.merchantAddress}}</span></div>
       </div>
     </div>
   </div>
@@ -34,14 +34,14 @@ const key ="JAJBZ-ADQLJ-MMHFF-K63WY-IOZX7-OOF6T"; //开发key，可在控制台�
 export default {
   components: { SvgIcon },
   name: 'TencentMap',
-  props: ['shopData'],
+  props: ['shopData','userData'],
   data() {
     return {
       shopInfo:{
         merchantName: '',//店铺名称
         merchantAddress: '',//店铺具体地址
-        lat: '',//经度
-        lon: '',//纬度
+        lat: null,//经度
+        lon: null,//纬度
       },
       user:{//用户当前定位
         lat: null,//经度
@@ -57,6 +57,7 @@ export default {
     },
     //设置起止绘制路线的标记marker的样式和位置
     display_marker() {
+      map.panTo( new TMap.LatLng(this.user.lng, this.user.lat))
       marker = new TMap.MultiMarker({ 
         id: 'marker-layer',
         map: map,
@@ -77,11 +78,11 @@ export default {
         geometries: [{
           "id": 'start',
           "styleId": 'start',
-          "position": new TMap.LatLng(this.user.lat,this.user.lon)
+          "position": new TMap.LatLng(this.user.lng,this.user.lat)
         }, {
           "id": 'end',
           "styleId": 'end',
-          "position": new TMap.LatLng(this.shop.lat,this.shop.lng)
+          "position": new TMap.LatLng(this.shopInfo.lon,this.shopInfo.lat)
         }]
       });
     },
@@ -112,10 +113,8 @@ export default {
     },
     //初始化map--定义map变量，调用 TMap.Map() 构造函数创建地图
     initMap () {
-      const _this = this
-      console.log(_this.user.lat, _this.user.lng,'用户定位')
       // 定义地图中心点坐标
-      center = new TMap.LatLng(_this.shopInfo.lat, _this.shopInfo.lon)
+      center = new TMap.LatLng(this.shopInfo.lon, this.shopInfo.lat)
       map = new TMap.Map(document.getElementById('map'), {
         center: center,
         zoom: 16, // 设置地图缩放级别--数值越大显示的越具体
@@ -170,29 +169,29 @@ export default {
         count += 1
         this.removeMarker()
         this.display_marker()
-        const url = `${wayUrl}${way}/?from=${this.user.lat},${this.user.lng}&to=${this.shopInfo.lat},${this.shopInfo.lon}&output=jsonp&callback=cb&key=${key}`
+        const url = `${wayUrl}${way}/?from=${this.user.lng},${this.user.lat}&to=${this.shopInfo.lon},${this.shopInfo.lat}&output=jsonp&callback=cb&key=${key}`
         this.jsonp_request(url)
       } else {
         this.$toast('无法获取您当前位置，路线规划失败！')
       }
     },
     //获取当前经纬度
-    getLocation(){
-      geolocation = new qq.maps.Geolocation(key, "discountShop");
-      geolocation.getLocation(this.showPosition,this.errPosition,timeOptions)//获取当前位置后的回调，成功--失败--请求option设置
-    },
-    //获取当前定位成功的回调
-    showPosition(position) {
-      flag = true
-      this.user.lat = position.lat
-      this.user.lng = position.lng
-      this.$toast('已获取您的位置')
-    },
-    //获取当前定位失败的回调
-    errPosition(position) {
-      flag = false
-      this.$toast('无法获取您当前位置，路线规划失败！')
-    },
+    // getLocation(){
+    //   geolocation = new qq.maps.Geolocation(key, "discountShop");
+    //   geolocation.getLocation(this.showPosition,this.errPosition,timeOptions)//获取当前位置后的回调，成功--失败--请求option设置
+    // },
+    // //获取当前定位成功的回调
+    // showPosition(position) {
+    //   flag = true
+    //   this.user.lat = position.lat
+    //   this.user.lng = position.lng
+    //   this.$toast('已获取您的位置')
+    // },
+    // //获取当前定位失败的回调
+    // errPosition(position) {
+    //   flag = false
+    //   this.$toast('无法获取您当前位置，路线规划失败！')
+    // },
     //浏览器调用WebServiceAPI需要通过Jsonp的方式，此处定义了发送JOSNP请求的函数
     jsonp_request(url){
       var script=document.createElement('script');
@@ -205,7 +204,7 @@ export default {
       let coords = [];
       let pl = [];
       if(GoWay === 'transit') {
-        Array.prototype.forEach.call(ret.result.routes[0].steps,() => {
+        Array.prototype.forEach.call(ret.result.routes[0].steps,(item) => {
           if(item.polyline){
             coords.push(item.polyline)
           }else if(item.lines) {
@@ -220,20 +219,26 @@ export default {
       for (let i = 2; i < coords.length; i++) {
         coords[i] = Number(coords[i - 2]) + Number(coords[i]) / kr;
       }
-      //将解压后的坐标放入点串数组pl中
-      for (let i = 0; i < coords.length; i += 2) {
-        pl.push(new TMap.LatLng(coords[i], coords[i+1]));
-      }
-      if(count > 1) {
+      const isDeep = coords.some((item) => item instanceof Array) ? true : false;//发现可能coords是二维数组，也就是说没有该种规划
+      if(count > 1 && polylineLayer) {
         polylineLayer.setMap(null);
         polylineLayer = null;
       }
-      this.display_polyline(pl)//显示路线
+      if(isDeep) {
+        this.$toast('暂无该出行方式路线规划！')
+      }else{
+        //将解压后的坐标放入点串数组pl中
+        for (let i = 0; i < coords.length; i += 2) {
+          pl.push(new TMap.LatLng(coords[i], coords[i+1]));
+        }
+        this.display_polyline(pl)//显示路线
+      }
     },
   },
   mounted () {
-    this.getLocation()
-    this.initMap()
+    this.$nextTick(() => {
+      this.initMap()
+    })
     //把腾讯地图绘制路线的请求jsonp对应的window回调函数cb挂载到lineHandle
     window['cb'] = (val) => {
       this.lineHandle(val)
@@ -243,6 +248,15 @@ export default {
   watch:{
     shopData(val) {
       this.shopInfo = Object.assign(this.shopInfo, val)
+    },
+    userData(val) {
+      this.user.lat = val.lat
+      this.user.lng = val.lon
+      if(this.user.lat && this.user.lng) {
+        this.flag = true
+      }else{
+        this.flag =false
+      }
     }
   }
 }

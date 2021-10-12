@@ -9,7 +9,7 @@
 <template>
   <div class="location" style="height:100%">
     <common-header title="门店位置"></common-header>
-    <tencent-map :shopData="shopInfo"></tencent-map>
+    <tencent-map :shopData="shopInfo" :userData="userInfo"></tencent-map>
   </div>
 </template>
 <script>
@@ -20,12 +20,19 @@ export default {
   components: { TencentMap },
   data() {
     return {
-      shopInfo: {}
+      shopInfo: {},
+      userInfo: {}
     }
   },
   mounted() {
-    this.shopInfo = JSON.parse(this.$router.query.data)
+    this.shopInfo = JSON.parse(this.$route.query.data)
+    this.userInfo = JSON.parse(this.$route.query.commonData)
+    this.shopInfo.lat = Number(this.shopInfo.lat)
+    this.shopInfo.lon = Number(this.shopInfo.lon)
+    this.userInfo.lat = Number(this.userInfo.lat)
+    this.userInfo.lon = Number(this.userInfo.lon)
     console.log(this.shopInfo, 'shopInfo')
+    console.log(this.userInfo, 'userInfo')
   }
 }
 </script>

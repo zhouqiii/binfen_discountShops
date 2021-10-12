@@ -67,7 +67,7 @@
                         <span class="desc_area ellipsis">{{item.areaName}}</span>
                         <span class="desc_type ellipsis">{{item.merchantTypeName}}</span>
                       </div>
-                      <span class="desc_distance">{{item.distanceKm}}km</span>
+                      <span class="desc_distance ellipsis" v-if="item.distanceKm !== 0">{{item.distanceKm}}km</span>
                     </div>
                     <div class="detail_sale">
                       <span class="area ellipsis">
@@ -151,7 +151,11 @@ export default {
         const dataList = res.body.shopList
         if(dataList.length > 0) {
           dataList.forEach((item) => {
-            this.$set(item,'distanceKm',Math.round((parseFloat(item.distance)/1000)*100)/100)
+            if(item.distance){
+              this.$set(item,'distanceKm',Math.round((parseFloat(item.distance)/1000)*100)/100)
+            }else{
+              this.$set(item,'distanceKm',0)
+            }
           });
         }
         this.shopList = this.shopList.concat(dataList)

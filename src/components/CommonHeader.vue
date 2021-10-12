@@ -57,9 +57,7 @@ export default {
   methods: {
     back() {
       if(this.type === '0') {
-        callAppMethod({
-          callName: "lastGoBack",
-        });
+        window.history.go(-1)
       }else if(this.type === '1') {
         this.$router.go(-1)
       }else if(this.type === '5') {

@@ -64,7 +64,7 @@
                         <span class="desc_area ellipsis">{{item.areaName}}</span>
                         <span class="desc_type ellipsis">{{item.merchantTypeName}}</span>
                       </div>
-                      <span class="desc_distance">{{item.distanceKm}}km</span>
+                      <span class="desc_distance ellipsis" v-if="item.distanceKm !== 0">{{item.distanceKm}}km</span>
                     </div>
                     <div class="detail_sale">
                       <span class="area ellipsis" @click.stop="toTheShop(item.businessAreaCode,item.businessAreaName)">
@@ -146,7 +146,7 @@ export default {
       console.log(searchData,'searchData查看cityId这些jsp是否拿到')
       const { cityId, lon, lat } = searchData
       needData = { cityId, lon, lat }
-      this.getTradeArea()
+      // this.getTradeArea()
     },
     //首页获取头部下拉商铺列表
     getTradeArea() {
@@ -182,6 +182,9 @@ export default {
       this.getShopList('sel')
     },
     getShopList(type) {
+      // getMock().then((res) => {
+      //   this.shopList = this.shopList.concat(res.data.body.shopList)
+      // })
       getShopsList(searchData).then((res) => {
         //加载状态结束
         this.loading = false
@@ -189,7 +192,11 @@ export default {
         const dataList = res.body.shopList
         if(dataList.length > 0) {
           dataList.forEach((item) => {
-            this.$set(item,'distanceKm',Math.round((parseFloat(item.distance)/1000)*100)/100)
+            if(item.distance){
+              this.$set(item,'distanceKm',Math.round((parseFloat(item.distance)/1000)*100)/100)
+            }else{
+              this.$set(item,'distanceKm',0)
+            }
           });
         }
         this.shopList = this.shopList.concat(dataList)

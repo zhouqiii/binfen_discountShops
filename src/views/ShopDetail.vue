@@ -11,7 +11,7 @@
     <common-header type="5" title="商户详情"></common-header>
     <div class="detail_shop">
       <div class="shop_img">
-        <img :src="shop.merchantPicture" alt="" :onerror="defaultImg">
+        <img :src="shop.merchantPicture" alt="" :onerror="defaultImg" @click="toTheLocation">
         <!-- <div class="img_time flex_between" v-if='time > 0'>
           <div class="time_text"><img src="../assets/img/icon_search.png"/>活动倒计时</div>
           <van-count-down :time="time" @finish="startHandle" class="time_time">
@@ -36,7 +36,7 @@
         </span>
       </div>
       <div class="shop_desc flex_between" style="padding-top:11px;padding-bottom:16px">
-        <span class='desc_dis'>{{shop.merchantAddress}} 距您{{shop.distanceKm}}km</span>
+        <div class='desc_dis'>{{shop.merchantAddress}} <span v-if="shop.distanceKm !== 0">距您{{shop.distanceKm}}km</span></div>
         <div style="flex:1;justify-content:flex-end" class="flex_between">
           <!-- <div class="flex_column" @click="toLocation"><svg-icon iconClass="daohang"></svg-icon><span>导航</span></div> -->
           <div class="desc_phone flex_column" @click="toCall">
@@ -140,6 +140,15 @@ export default {
       toCall() {
         window.location.href = `tel:${this.shop.merchantTel}`;
       },
+      toTheLocation() {
+        this.$router.push({
+          path:'/ShopLocation',
+          query: { 
+            data: this.$route.query.data,//这是把商户的信息给地图显示
+            commonData: this.$route.query.commonData//这是把用户当前位置给地图方便导航
+          }
+        })
+      },
       getCollapse() {
         if(this.activeCollapse.length > 0) {
           this.collapse = '展开'
@@ -178,11 +187,11 @@ export default {
       next()
     },
     computed: {
-    //商户图片加载失败时显示的默认图片
-    defaultImg() {
-      return 'this.src="'+require('../assets/img/img_shopdetail.png')+'"'
+      //商户图片加载失败时显示的默认图片
+      defaultImg() {
+        return 'this.src="'+require('../assets/img/img_shopdetail.png')+'"'
+      }
     }
-  }
 }
 </script>
 <style lang="less" scoped>
