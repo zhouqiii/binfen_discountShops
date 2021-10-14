@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-09-24 10:27:10
- * @LastEditTime: 2021-10-11 14:54:13
+ * @LastEditTime: 2021-10-13 16:19:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \binfen_discountShops\src\views\ShopDetail.vue
@@ -11,7 +11,7 @@
     <common-header type="5" title="商户详情"></common-header>
     <div class="detail_shop">
       <div class="shop_img">
-        <img :src="shop.merchantPicture" alt="" :onerror="defaultImg" @click="toTheLocation">
+        <img :src="shop.merchantPicture" alt="" :onerror="defaultImg">
         <!-- <div class="img_time flex_between" v-if='time > 0'>
           <div class="time_text"><img src="../assets/img/icon_search.png"/>活动倒计时</div>
           <van-count-down :time="time" @finish="startHandle" class="time_time">
@@ -36,7 +36,7 @@
         </span>
       </div>
       <div class="shop_desc flex_between" style="padding-top:11px;padding-bottom:16px">
-        <div class='desc_dis'>{{shop.merchantAddress}} <span v-if="shop.distanceKm !== 0">距您{{shop.distanceKm}}km</span></div>
+        <div class='desc_dis'>{{shop.merchantAddress}}<span v-if="shop.distanceKm !== 0"> 距您{{shop.distanceKm}}km</span></div>
         <div style="flex:1;justify-content:flex-end" class="flex_between">
           <!-- <div class="flex_column" @click="toLocation"><svg-icon iconClass="daohang"></svg-icon><span>导航</span></div> -->
           <div class="desc_phone flex_column" @click="toCall">
@@ -80,14 +80,14 @@
       </div>
       <div class="discont_box">
         <div  class="discount_title">活动时间</div>
-        <div class="discount_desc">{{shop.startDateDay}}至{{shop.endDateDay}}</div>
+        <div class="discount_desc">{{shop.startDateDay}}-{{shop.endDateDay}}</div>
       </div>
       <div class="discont_box">
         <div class="discount_title">活动卡种</div>
         <div class="discount_desc">
           <div v-if="shop.activityCardTypeList.length > 3" class="desc_type flex_row">
-            <span v-for='(item,index) in shop.activityCardTypeList.slice(0,3)' :key="index" style="width:30%" class="ellipsis">{{item}};</span>
-            <span v-for='(item,index) in shop.activityCardTypeList.slice(3)' :key="index" style="width:30%"  class="ellipsis" v-show="activeCollapse.length > 0">{{item}};</span>
+            <span v-for='(item,index) in shop.activityCardTypeList.slice(0,3)' style="width:30%" class="ellipsis">{{item}};</span>
+            <span v-for='(item,index) in shop.activityCardTypeList.slice(3)' style="width:30%"  class="ellipsis" v-show="activeCollapse.length > 0">{{item}};</span>
             <van-collapse v-model="activeCollapse" @change="getCollapse" class="collapse_drop">
               <van-collapse-item title="" name='1'>
                 <template #value>{{collapse}}</template>
@@ -95,7 +95,7 @@
             </van-collapse>
           </div>
           <div v-else class="desc_type flex_row">
-            <span v-for='(item,index) in shop.activityCardTypeList' :key="index" style="width:30%">{{item}};</span>
+            <span v-for='(item,index) in shop.activityCardTypeList' style="width:30%">{{item}};</span>
           </div>
         </div>
       </div>
@@ -131,23 +131,14 @@ export default {
           ruleList:[],//优惠信息
         },
         // time: 0,
-        collapse:'收起',//
+        collapse:'收起',
         activeCollapse: ['1'],
-        routeFlag: 0,//0-从商券列表到详情再返回商券列表需要缓存 1-从详情点击商圈到商圈列表不需要缓存
+        routeFlag: 0//0: 从商圈列表到详情的返回商圈列表页 1：从详情点商圈到商圈列表
       }
     },
     methods:{
       toCall() {
         window.location.href = `tel:${this.shop.merchantTel}`;
-      },
-      toTheLocation() {
-        this.$router.push({
-          path:'/ShopLocation',
-          query: { 
-            data: this.$route.query.data,//这是把商户的信息给地图显示
-            commonData: this.$route.query.commonData//这是把用户当前位置给地图方便导航
-          }
-        })
       },
       getCollapse() {
         if(this.activeCollapse.length > 0) {
@@ -159,12 +150,12 @@ export default {
       //点击去该商圈所有商户列表的页面
       toTheShop() {
         this.routeFlag = 1
-        let needData = JSON.parse(this.$route.query.commonData)
-        needData.businessAreaCode = this.shop.businessAreaCode
+        let data = JSON.parse(this.$route.query.commonData)
+        data.businessAreaCode = this.shop.businessAreaCode
         this.$router.push({
           path:'/ShopListArea',
           query: { 
-            info: JSON.stringify(needData),
+            info: JSON.stringify(data),
             title: this.shop.businessAreaName
           }
         })
@@ -178,8 +169,8 @@ export default {
       this.shop =Object.assign(this.shop, data)
       console.log(this.shop,'商户信息')
     },
-    beforeRouteLeave: function(to, from, next) {
-      if(to.path === '/' || (to.path==='/ShopListArea' && this.routeFlag === 0)) {
+    beforeRouteLeave:function(to, from, next) {
+      if(to.path === '/' || (to.path === '/ShopListArea' && this.routeFlag === 0 )) {
         to.meta.keepAlive = true
       }else{
         to.meta.keepAlive = false
@@ -187,11 +178,11 @@ export default {
       next()
     },
     computed: {
-      //商户图片加载失败时显示的默认图片
-      defaultImg() {
-        return 'this.src="'+require('../assets/img/img_shopdetail.png')+'"'
-      }
+    //商户图片加载失败时显示的默认图片
+    defaultImg() {
+      return 'this.src="'+require('../assets/img/img_shopdetail.png')+'"'
     }
+  }
 }
 </script>
 <style lang="less" scoped>

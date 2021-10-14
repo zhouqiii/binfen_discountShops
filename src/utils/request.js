@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-09-24 10:27:10
- * @LastEditTime: 2021-09-30 17:19:08
+ * @LastEditTime: 2021-10-14 10:13:06
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \binfen_discountShops\src\utils\request.js
@@ -11,7 +11,7 @@ import createDom from "@/utils/createDom";
 import Loading from '@/components/Loading.vue';
 import { Dialog } from 'vant';
 const request = axios.create({
-    baseURL: '', //process.env.NODE_ENV === "development" ? "" : "http://22.187.19.164:9081",//AppPrj //http://22.187.19.164:9081
+    baseURL: process.env.NODE_ENV === "development" ? "" : "http://21.123.19.164:9081",//process.env.NODE_ENV === "development" ? "http://22.187.19.164:9081" : "http://21.123.19.164:9081",//AppPrj //http://22.187.19.164:9081, //process.env.NODE_ENV === "development" ? "" : "http://22.187.19.164:9081",//AppPrj //http://22.187.19.164:9081
     timeout: 15000,
     withCredentials: true,
     // async: false

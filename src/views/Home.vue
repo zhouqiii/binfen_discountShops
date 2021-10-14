@@ -146,7 +146,7 @@ export default {
       console.log(searchData,'searchData查看cityId这些jsp是否拿到')
       const { cityId, lon, lat } = searchData
       needData = { cityId, lon, lat }
-      // this.getTradeArea()
+      this.getTradeArea()
     },
     //首页获取头部下拉商铺列表
     getTradeArea() {
@@ -170,8 +170,8 @@ export default {
       this.$router.push({
         path:'/ShopListArea',
         query: { 
-          info: JSON.stringify(needData),
-          title: busAreaName
+          info: JSON.stringify(needData),//cityId,lat,lon公共信息及商圈Id
+          title: busAreaName//商圈名
         }
       })
     },
@@ -182,9 +182,6 @@ export default {
       this.getShopList('sel')
     },
     getShopList(type) {
-      // getMock().then((res) => {
-      //   this.shopList = this.shopList.concat(res.data.body.shopList)
-      // })
       getShopsList(searchData).then((res) => {
         //加载状态结束
         this.loading = false
@@ -227,7 +224,7 @@ export default {
         path:'/ShopDetail',
         query: { 
           data: JSON.stringify(data),
-          commonData: JSON.stringify(needData)
+          commonData: JSON.stringify(needData)//cityId,lat,lon公共信息
         }
       })
     },
@@ -237,8 +234,8 @@ export default {
   },
   activated() {
     addBodyOver() //加上这一步才能防止list外部div跟随滚动
-    this.$refs.listBox.addEventListener('scroll',this.handleScroll,true)
     this.$refs.listBox.scrollTop = this.$store.state.module1.homeTop
+    this.$refs.listBox.addEventListener('scroll',this.handleScroll,true)
   },
   deactivated() {
     moveBodyOver()

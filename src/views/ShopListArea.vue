@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-09-26 20:03:11
- * @LastEditTime: 2021-10-11 11:35:43
+ * @LastEditTime: 2021-10-12 17:15:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \binfen_discountShops\src\views\AreaShopList.vue
@@ -142,7 +142,22 @@ export default {
     //请求接口获取列表
     getShopList() {
       // getMock().then((res) => {
-      //   this.shopList = this.shopList.concat(res.data.body.shopList)
+      // //加载状态结束
+      // this.loading = false;
+      //   const dataList = res.data.body.shopList
+      //   if(dataList.length > 0) {
+      //     dataList.forEach((item) => {
+      //       if(item.distance){
+      //         this.$set(item,'distanceKm',Math.round((parseFloat(item.distance)/1000)*100)/100)
+      //       }else{
+      //         this.$set(item,'distanceKm',0)
+      //       }
+      //     });
+      //   }
+      //   this.shopList = this.shopList.concat(dataList)
+      //   this.listLength = this.shopList.length === 0 
+      //   this.hasNextPage = res.body.hasNextPage === '1'
+      //   this.finished = res.body.hasNextPage === '0'
       // })
       getShopsList(searchData).then((res) => {
         // 加载状态结束
@@ -176,7 +191,7 @@ export default {
         path:'/ShopDetail',
         query: { 
           data: JSON.stringify(data),
-          commonData: this.$route.query.info
+          commonData: this.$route.query.info//cityId,lat,lon公共信息
         }
       })
     },
@@ -222,9 +237,6 @@ export default {
     defaultImg() {
       return 'this.src="'+require('../assets/img/img_default.png')+'"'
     }
-  },
-  beforeDestroy() {
-    this.$refs.areaBox.removeEventListener('scroll',this.handleScroll,true)
   },
 }
 </script>

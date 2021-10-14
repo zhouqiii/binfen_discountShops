@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-09-24 10:27:10
+ * @LastEditTime: 2021-10-11 17:06:34
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \binfen_discountShops\src\store\index.js
+ */
 import { String } from 'core-js'
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -25,7 +33,9 @@ export default new Vuex.Store({
   modules,
   // 全局公用的四个对象可以写在这里，也可以拆分成一个专门存放公用状态的module
   state: {
-    city: defaultCity
+    cityId: '',
+    lat: '',
+    lon: ''
   },
   mutations: {
     changecitys (state, value) {

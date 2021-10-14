@@ -34,11 +34,11 @@ const routes = [
       keepAlive: true,
     }
   },
-  {
-    path: '/ShopLocation',
-    name: 'ShopLocation',
-    component: () => import('../views/ShopLocation.vue'),
-  },
+  // {
+  //   path: '/ShopLocation',
+  //   name: 'ShopLocation',
+  //   component: () => import('../views/ShopLocation.vue'),
+  // },
 ]
 
 const router = new VueRouter({

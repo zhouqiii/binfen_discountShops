@@ -48,8 +48,8 @@ module.exports = {
   },
   devServer: {
     proxy: {
-      '/dsmsmqsc': {//dsmsboc
-        target: 'http://22.187.19.164:9081',//唐荣华本地--http://22.11.236.167:8081 dns='167'//服务器地址22.187.19.164:9081
+      '/dsmsboc': {//dsmsboc
+        target: 'https://www.alex188.cn/',//唐荣华本地--http://22.11.236.167:8081 dns='167'//服务器地址22.187.19.164:9081
         changeOrigin: true,
         ws: true,
       }
