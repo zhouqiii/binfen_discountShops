@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-09-24 10:27:10
- * @LastEditTime: 2021-09-26 16:12:07
+ * @LastEditTime: 2021-10-15 16:22:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \binfen_discountShops\src\components\Loading.vue

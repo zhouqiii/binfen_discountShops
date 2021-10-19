@@ -19,18 +19,18 @@
           <img src="../assets/img/img_nocontent.png"/>
           <div>没有找到合适的商户～</div>
         </div>
+        <div v-if="noListFlag === 'net'" class="list_nocontent">
+          <img src="../assets/img/icon_net.png"/>
+          <div>网络出现了问题，获取数据失败</div>
+          <div @click="getShopList('sel')" class="list_reload"><!--sel-->
+            <img src="../assets/img/icon_reload.png"/>
+            <span>重新加载</span>
+          </div>
+        </div>
         <div v-else-if="noListFlag === 'near'" class="list_nocontent">
           <img src="../assets/img/img_nolist.png"/>
           <div>您附近暂无优惠商户～</div>
         </div>
-        <!-- <div v-if="ifNetShopList" class="list_nocontent">
-          <img src="../assets/img/icon_network.png"/>
-          <div style="margin-top:12px">网络出现了问题，获取数据失败</div>
-          <div class="list_reload">
-            <img src="../assets/img/icon_reload.png"/>
-            <span>重新加载</span>
-          </div>
-        </div> -->
         <!-- <van-pull-refresh v-else> -->
           <van-list
             v-else
@@ -68,7 +68,7 @@
                     </div>
                     <div class="detail_sale">
                       <span class="area ellipsis" @click.stop="toTheShop(item.businessAreaCode,item.businessAreaName)">
-                        <img src="../assets/img/icon_merchant.png" alt="">
+                        <img src="../assets/img/icon_merchant.png" alt="../assets/img/icon_merchant.png">
                         <span>{{item.businessAreaName}}</span>
                       </span>
                     </div>
@@ -109,9 +109,9 @@ import SvgIcon from '../components/SvgIcon.vue';
 import { addBodyOver, moveBodyOver } from '../utils/commonInterface';
 
 let searchData = {
-  cityId: '',//上送城市编号110100
-  lon: '',//经度'39.232'
-  lat: '',//纬度116.121
+  cityId: '110100',//上送城市编号110100
+  lon: '39.232',//经度'39.232'
+  lat: '116.121',//纬度116.121
   businessAreaCode: '',//商圈编号
   merTypeCode: '',//商户分类编号
   areaId: '',//区域编号
@@ -136,7 +136,6 @@ export default {
       finished: false,//商户列表已经到底了
       hasNextPage: true,
       noListFlag: '',
-      // ifNetShopList: false,//首页列表获取request连接失败
       ifFailSel: true
     }
   },
@@ -153,14 +152,15 @@ export default {
       const data = {
         cityId: searchData.cityId,//上送城市编号
         txnId: '1PMC000001',//交易号
-        // dns: '167'///生产环境注掉
       }
       // 获取商圈以及地区列表
       getTradeAreaList(data).then((res) => {
-        console.log(res,'商圈以及地区列表')
         this.ifFailSel = !(res.stat === '00')
-        if(res.body) {
-          this.selData = res.body
+        if(res.stat === '00') {
+          console.log(res,'商圈以及地区列表')
+          if(res.body) {
+            this.selData = res.body
+          }
         }
       })
     },
@@ -178,34 +178,43 @@ export default {
     //点击搜索或者切换商圈或地区更新商户列表
     upDateShopList(val) {
       this.shopList = []
+      searchData.pageNo = 1
       searchData = Object.assign(searchData, val)
-      this.getShopList('sel')
+      this.getShopList('sel')//sel
     },
     getShopList(type) {
       getShopsList(searchData).then((res) => {
-        //加载状态结束
-        this.loading = false
-        console.log(res.body,'这是拿到的商户列表')
-        const dataList = res.body.shopList
-        if(dataList.length > 0) {
-          dataList.forEach((item) => {
-            if(item.distance){
-              this.$set(item,'distanceKm',Math.round((parseFloat(item.distance)/1000)*100)/100)
-            }else{
-              this.$set(item,'distanceKm',0)
+        if(res.stat === '00') {
+          //加载状态结束
+          this.loading = false
+          console.log(res.body,'这是拿到的商户列表')
+          const dataList = res.body.shopList
+          if(dataList.length > 0) {
+            dataList.forEach((item) => {
+              if(item.distance){
+                this.$set(item,'distanceKm',Math.round((parseFloat(item.distance)/1000)*100)/100)
+              }else{
+                this.$set(item,'distanceKm',0)
+              }
+            });
+          }
+          this.shopList = this.shopList.concat(dataList)
+          if(this.shopList.length === 0) {
+            if(type === 'sel') {//type === 'sel'
+              this.noListFlag = 'sel'
+            }else {
+              this.noListFlag = 'near'
             }
-          });
-        }
-        this.shopList = this.shopList.concat(dataList)
-        if(this.shopList.length === 0) {
-          if(type === 'sel') {
-            this.noListFlag = this.shopList.length === 0 ?  'sel' : ''
-          }else {
-            this.noListFlag = this.shopList.length === 0 ?  'near' : ''
+          }else{
+            this.noListFlag = ''
+          }
+          this.hasNextPage = res.body.hasNextPage === '1'
+          this.finished = res.body.hasNextPage === '0'
+        } else {
+          if(this.shopList.length === 0) {
+            this.noListFlag = 'net'
           }
         }
-        this.hasNextPage = res.body.hasNextPage === '1'
-        this.finished = res.body.hasNextPage === '0'
       })
     },
     //商户列表加载到底部刷新
@@ -242,9 +251,23 @@ export default {
     this.$refs.listBox.removeEventListener('scroll',this.handleScroll,true)
   },
   mounted() {
-    searchData.cityId = this.cityId
-    searchData.lat = this.lat
-    searchData.lon = this.lon
+    //从url截取cityId，lat,lon
+    const url = window.location.href//"http://22.11.236.108:8088/CouponsMallWeb/ColorfulLife_discountShops/index.html?cityId=110110&lat=116&lon=119#/"
+    const list = url.split('?')
+    if(list[1]) {
+      const param = list[1].split('#/')[0].split('&')
+      param.forEach((item) => {
+        if(item.indexOf('cityId=') > -1) {
+          searchData.cityId = item.split('cityId=')[1]
+        }
+        if(item.indexOf('lat=') > -1) {
+          searchData.lat = item.split('lat=')[1]
+        }
+        if(item.indexOf('lon=') > -1) {
+          searchData.lon = item.split('lon=')[1]
+        }
+      })
+    }
     this.getCurrentInfo()
     this.getShopList()
   },
@@ -273,7 +296,7 @@ export default {
 .home_content{
   padding-top: 64px;
   .content_list{
-    height: calc(100% - 64px);
+    height: calc(100% - 64px);//calc(100% - 64px)
     padding: 0 @P16;
   }
 }

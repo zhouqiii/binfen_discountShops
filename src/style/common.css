@@ -88,13 +88,14 @@ img {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-@media screen and (orientation: portrait) {
-  /* .navbar{
-      padding-top: constant(safe-area-inset-top);
-      padding-top: env(safe-area-inset-top);
-  } */
-}
 /* 适配全面屏底部栏 */
+@media screen and (orientation: portrait){
+  .pop_phone{
+      padding-bottom: constant( safe-area-inset-bottom);/*ios 11*/
+      padding-bottom: env( safe-area-inset-bottom);/*ios 11.2以上*/
+  }
+}
+
 @media screen and (orientation: landscape) {
   .bottom{
     /* IOS 11*/

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-09-24 10:27:10
- * @LastEditTime: 2021-10-14 10:13:06
+ * @LastEditTime: 2021-10-18 17:15:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \binfen_discountShops\src\utils\request.js
@@ -11,7 +11,7 @@ import createDom from "@/utils/createDom";
 import Loading from '@/components/Loading.vue';
 import { Dialog } from 'vant';
 const request = axios.create({
-    baseURL: process.env.NODE_ENV === "development" ? "" : "http://21.123.19.164:9081",//process.env.NODE_ENV === "development" ? "http://22.187.19.164:9081" : "http://21.123.19.164:9081",//AppPrj //http://22.187.19.164:9081, //process.env.NODE_ENV === "development" ? "" : "http://22.187.19.164:9081",//AppPrj //http://22.187.19.164:9081
+    baseURL: process.env.NODE_ENV === "development" ? "http://22.187.19.164:9081" : "http://22.187.19.164:9081",//http://21.123.75.119:9080
     timeout: 15000,
     withCredentials: true,
     // async: false
@@ -50,7 +50,7 @@ function interceptorsResponse(res) {
       confirmButtonText:'确定'
     })
   }
-  return Promise.reject(res.data.message);
+  return res//Promise.reject(res.data.message);
 }
 //请求异常处理
 const errHandlerRequest = (error) => {

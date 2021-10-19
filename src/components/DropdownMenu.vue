@@ -179,7 +179,7 @@ export default {
           this.typeOptions.push(obj)
         });
       }
-      this.ifFailType = !this.typeOptions ? true : false//说明商户种类为空
+      this.ifFailType =  val.merTypeList.length<1 ? true : false//说明商户种类为空
       console.log(this.ifFailArea,this.ifFailType,this.ifFailSel,'头部显示')
       console.log(this.areaOptions,this.typeOptions,'头部选项列表')
     },

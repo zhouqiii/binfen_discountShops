@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-09-26 20:03:11
- * @LastEditTime: 2021-10-12 17:15:35
+ * @LastEditTime: 2021-10-18 15:15:04
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \binfen_discountShops\src\views\AreaShopList.vue
@@ -30,9 +30,17 @@
     </div>
     <div class="home_content" :style="thisStyle">
       <div class="content_list" ref="areaBox">
-        <div v-if="listLength" class="list_nocontent">
+        <div v-if="noListFlag === 'nocontent'" class="list_nocontent">
           <img src="../assets/img/img_nocontent.png"/>
           <div>没有找到合适的商户~</div>
+        </div>
+        <div v-if="noListFlag === 'net'" class="list_nocontent">
+          <img src="../assets/img/icon_net.png"/>
+          <div>网络出现了问题，获取数据失败</div>
+          <div @click="getShopList" class="list_reload"><!--sel-->
+            <img src="../assets/img/icon_reload.png"/>
+            <span>重新加载</span>
+          </div>
         </div>
         <!-- <van-pull-refresh v-else> -->
           <van-list
@@ -127,7 +135,7 @@ export default {
   data() {
     return{
       shopList:[],
-      listLength: false,
+      noListFlag: '',
       hasNextPage: false,
       finished: false,
       ifSearch: false,
@@ -160,23 +168,29 @@ export default {
       //   this.finished = res.body.hasNextPage === '0'
       // })
       getShopsList(searchData).then((res) => {
-        // 加载状态结束
-        this.loading = false;
-        console.log(res.body,'这是拿到的商户列表')
-        const dataList = res.body.shopList
-        if(dataList.length > 0) {
-          dataList.forEach((item) => {
-            if(item.distance){
-              this.$set(item,'distanceKm',Math.round((parseFloat(item.distance)/1000)*100)/100)
-            }else{
-              this.$set(item,'distanceKm',0)
-            }
-          });
+        if(res.stat === '00') {
+          // 加载状态结束
+          this.loading = false;
+          console.log(res.body,'这是拿到的商户列表')
+          const dataList = res.body.shopList
+          if(dataList.length > 0) {
+            dataList.forEach((item) => {
+              if(item.distance){
+                this.$set(item,'distanceKm',Math.round((parseFloat(item.distance)/1000)*100)/100)
+              }else{
+                this.$set(item,'distanceKm',0)
+              }
+            });
+          }
+          this.shopList = this.shopList.concat(dataList)
+          this.noListFlag = this.shopList.length === 0 ? 'nocontent' : ''
+          this.hasNextPage = res.body.hasNextPage === '1'
+          this.finished = res.body.hasNextPage === '0'
+        }else{
+          if(this.shopList.length === 0) {
+            this.noListFlag = 'net'
+          }
         }
-        this.shopList = this.shopList.concat(dataList)
-        this.listLength = this.shopList.length === 0 
-        this.hasNextPage = res.body.hasNextPage === '1'
-        this.finished = res.body.hasNextPage === '0'
       })
     },
     //商户列表加载到底部刷新
@@ -245,7 +259,7 @@ export default {
 .home_content{
   padding-top: @P16;
   .content_list{
-    height: calc(100% - 32px);
+    height: calc(100% - 32px);//calc(100% - 32px)
     padding: 0 @P16 @P16 @P16;
   }
 }

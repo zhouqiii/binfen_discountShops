@@ -8,6 +8,8 @@
             img{
                 width: 100%;
                 height: 100%;
+                background: url('../../assets/img/img_shopdetail.png') no-repeat center 50%;
+                background-size: 100% 100%;
             }
             .img_time{
                 position: absolute;
@@ -57,18 +59,17 @@
                 }
             }
             .area{
-                height: 18px;
-                line-height: 18px;
+                // height: 14Px;
+                // line-height: 14Px;
                 padding: 1px 4px;
                 border-radius: 2px;
                 background: @CE85;
                 color: @CFFF;
                 font-size: @F12;
-                display: inline-block;
                 max-width: calc(100% - 10px);
                 img{
-                    height: @F14;
-                    width: @F14;
+                    height: 14Px;
+                    width: 14Px;
                     vertical-align: sub;
                     margin-right: 3px;
                   }
@@ -80,6 +81,18 @@
                 color: @C666;
                 padding-right: @P16;
                 border-right: 1px solid #eeeeee;
+            }
+            .pop_phone{
+                font-size: @F16;
+                color: @C666;
+                div{
+                    height: 54px;
+                    line-height: 54px;
+                    border-bottom: 1px solid @CEEE;
+                }
+                .number{
+                    color: @CF44;
+                }
             }
         }
         .name{
@@ -123,6 +136,11 @@
             line-height: 18px;
             .desc_type{
                 flex-wrap: wrap;
+            }
+            .cardType{
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-start;
             }
         }
     }

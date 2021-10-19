@@ -92,7 +92,7 @@ export default {
     background: #fff;
     .left,
     .right{
-      flex: 0 0 90px;
+      flex: 0 0 50px;
       height: 100%;
     }
     .left {
